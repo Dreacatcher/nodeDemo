@@ -6,12 +6,11 @@ class UserService extends Service {
   constructor(ctx) {
     super(ctx)
   };
-  * add(name, password) {
+  * add(name, password, id) {
     console.log('service*************************')
     console.log(name)
     console.log(password)
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    let id = new Date().getTime()
     const result = yield this.app.mysql.insert('user', {
       name,
       id,
@@ -20,8 +19,6 @@ class UserService extends Service {
     const insertSuccess = result.affectedRows === 1;
     if (insertSuccess) {
       return result;
-    } else {
-      return []
     }
   };
   async find(name) {

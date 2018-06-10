@@ -7,10 +7,17 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1528474957031_2424';
 
   // add your config here
-  config.middleware = ['errorHandler'];
+  config.middleware = ['robot', 'errorHandler', 'apiWrapper', 'gzip'];
   // 只对 /api 前缀的 url 路径生效
   config.errorHandler = {
     match: '/api',
+  };
+  // middleware config
+  config.robot = {
+    ua: [/curl/i, /Baiduspider/i]
+  };
+  config.gzip = {
+    threshold: 1024
   };
   config.security = {
     csrf: {

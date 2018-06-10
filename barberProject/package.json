@@ -4,11 +4,13 @@
   "description": "barbers project resfulapi",
   "private": true,
   "dependencies": {
+    "another-json-schema": "^3.6.1",
     "babel-preset-es2015": "^6.24.1",
     "egg": "^2.2.1",
     "egg-cors": "^2.0.0",
     "egg-development-proxyworker": "^1.2.0",
     "egg-mysql": "^3.0.0",
+    "egg-redis": "^2.0.0",
     "egg-scripts": "^2.5.0",
     "egg-validate": "^1.0.0"
   },
