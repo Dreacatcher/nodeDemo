@@ -1,0 +1,7 @@
+// 封装返回结果对象
+exports.createResult = function(success, data) {
+  var result = {};
+  result.success = success;
+  result.data = data;
+  return result;
+};
