@@ -13,20 +13,6 @@ exports.index = async ctx => {
   const _name = ctx.request.query.name;
   const _psw = md5(Base64.encode(ctx.request.query.password));
   let result = await ctx.service.users.find(_name);
-
-  const json = {
-    code: 200,
-    msg: '请求成功',
-    data: {
-      userId: '123456 index',
-      name: _name,
-      psw: _psw,
-      blog: 'https://yunm.coding.me',
-    },
-  };
-  console.log('陆朝明测试111111');
-  console.log(result);
-  console.log('陆朝明测试2222222');
   ctx.body = result;
   ctx.status = 200;
 };
