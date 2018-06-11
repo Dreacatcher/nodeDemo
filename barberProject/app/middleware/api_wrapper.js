@@ -17,10 +17,13 @@ module.exports = (ctx, next) => {
       this.status = 200;
       return;
     }
+    
     // 统一处理错误和其他通用封装
     try {
       yield next;
+      console.log('api_wrapper_try*************************')
     } catch (err) {
+      console.log('api_wrapper_catch*************************'+`${err}`)
       this.body = {
         message: err.message
       };
