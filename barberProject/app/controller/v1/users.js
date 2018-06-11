@@ -19,11 +19,7 @@ exports.index = async ctx => {
   console.log('user-index*************************')
   if (vResult.valid) {
     const result = await ctx.service.users.find(name);
-    if (result) {
-      ctx.body = result;
-    } else {
-      ctx.body = {};
-    }
+    ctx.body = result;
     ctx.status = 200;
   } else {
     ctx.body = vResult.error;
@@ -33,9 +29,6 @@ exports.index = async ctx => {
 
 exports.new = async () => {};
 exports.create = async ctx => {
-  console.log('陆朝明controllercreate测试3333');
-  console.log(ctx.request.body);
-  console.log('陆朝明controllercreate测试4444');
   const userSchema = AJS('userSchema', {
     username: {
       type: 'string',
@@ -47,19 +40,10 @@ exports.create = async ctx => {
     },
   });
   const vResult = userSchema.validate(ctx.request.body);
-  console.log('user-index*************************');
-  console.log(ctx.request.body);
-  console.log(ctx.service.users.addUser);
   ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
   if (vResult.valid) {
     const result = await ctx.service.users.addUser(ctx.request.body);
-    console.log(result);
-    console.log('陆朝明测controllercreate试55555');
-    if (result) {
-      ctx.body = result;
-    } else {
-      ctx.body = {};
-    }
+    ctx.body = result;
     ctx.status = 200;
   } else {
     ctx.body = vResult.error;
@@ -68,9 +52,46 @@ exports.create = async ctx => {
 };
 
 exports.show = async () => {};
+exports.update = async ctx => {
+  const userSchema = AJS('userSchema', {
+    username: {
+      type: 'string',
+      required: true,
+    },
+    password: {
+      type: 'string',
+      required: true,
+    },
+  });
+  const vResult = userSchema.validate(ctx.request.body);
+  // console.log(ctx.param.id);
+  ctx.request.body.password = Base64.encode(md5(ctx.request.body.password));
+  // ctx.request.body.id = ctx.param.id;
+  if (vResult.valid) {
+    const result = await ctx.service.users.updateUser(ctx.request.body);
+    ctx.body = result;
+  } else {
+    ctx.body = vResult.error;
+  }
+};
+exports.destroy = async ctx => {
+  const userSchema = AJS('userSchema', {
+    username: {
+      type: 'string',
+      required: true,
+    },
+    password: {
+      type: 'string',
+      required: true,
+    },
+  });
+  const vResult = userSchema.validate(ctx.request.body);
+  ctx.request.body.password = Base64.encode(md5(ctx.request.body.password));
+  if (vResult.valid) {
+    const result = await ctx.service.users.deleteUser(ctx.request.body);
+    ctx.body = result;
+  } else {
+    ctx.body = vResult.error;
+  }
 
-exports.edit = async () => {};
-
-exports.update = async () => {};
-
-exports.destroy = async () => {};
+};
