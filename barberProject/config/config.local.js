@@ -12,10 +12,10 @@ exports.mysql = {
     // password
     password: '831015',
     // database
-    database: 'BarberDb',    
+    database: 'BarberDb'
   },
   // load into app, default is open
   app: true,
   // load into agent, default is close
-  agent: false,
-};
+  agent: false
+}
