@@ -4,23 +4,6 @@ const ran = () => {
   const num = new Date().getTime();
   return num.toString().substring(0, 16) + parseInt((Math.round(Math.random() * 30 + 100)));
 };
-const setTimeDateFmt = num => {
-  return num < 9 ? '0' + num : num;
-};
-const randomNumber = () => {
-  const now = new Date();
-  let month = now.getMonth() + 1;
-  let day = now.getDate();
-  let hour = now.getHours();
-  let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
-  month = setTimeDateFmt(month);
-  hour = setTimeDateFmt(hour);
-  day = setTimeDateFmt(day);
-  minutes = setTimeDateFmt(minutes);
-  seconds = setTimeDateFmt(seconds);
-  return now.getFullYear().toString() + '/' + month.toString() + '/' + day + '  ' + hour + ':' + minutes + ':' + seconds;
-};
 class UserService extends Service {
   async find(name) {
     console.log('2*************************');
@@ -29,7 +12,10 @@ class UserService extends Service {
     const user = await this.app.mysql.get('user', {
       username: name,
     });
-    return user;
+    return {
+      message: '',
+      data: user,
+    }
   };
   async addUser(param) {
     let result = {};
@@ -47,21 +33,21 @@ class UserService extends Service {
     if (hasName && hasName.id) {
       result = {
         message: '用户已经存在',
-        status: 200,
-      };
+        data: 'null',
+      }
     } else {
       const insertResult = await this.app.mysql.insert('user', param);
       const insertSuccess = insertResult.affectedRows === 1;
       if (!insertSuccess) {
         result = {
           message: '注册失败',
-          status: 200,
-        };
+          data: insertSuccess,
+        }
       } else {
         result = {
           message: '注册成功',
-          status: 200,
-        };
+          data: 'null',
+        }
       }
     }
     return result;
@@ -83,18 +69,18 @@ class UserService extends Service {
       if (!insertSuccess) {
         result = {
           message: '更新失败',
-          status: 200,
+          data: insertSuccess,
         };
       } else {
         result = {
           message: '更新成功',
-          status: 200,
+          data: 'null',
         };
       }
     } else {
       result = {
         message: '用户不存在',
-        status: 200,
+        data: 'null',
       };
     }
     return result;
@@ -116,18 +102,18 @@ class UserService extends Service {
       if (!insertSuccess) {
         result = {
           message: '删除失败',
-          status: 200,
+          data: insertSuccess,
         };
       } else {
         result = {
           message: '删除成功',
-          status: 200,
+          data: 'null',
         };
       }
     } else {
       result = {
         message: '用户不存在',
-        status: 200,
+        data: 'null',
       };
     }
     return result;
