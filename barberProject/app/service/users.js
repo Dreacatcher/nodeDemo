@@ -1,6 +1,5 @@
 'use strict';
 const Service = require('egg').Service;
-// const userSqlMap = require('../sql/users');
 const ran = () => {
   const num = new Date().getTime();
   return num.toString().substring(0, 16) + parseInt((Math.round(Math.random() * 30 + 100)));
