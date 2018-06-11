@@ -8,7 +8,8 @@ module.exports = () => {
       console.log('error_handler__try000000000000');
       // console.log(err.errors)
     } catch (err) {
-      console.log('error_handler__catch000000000000' + `${err}`);
+      console.log('error_handler__catch000000000000 ');
+      console.log(`${err}`);
       console.log(err.errors);
       // 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志
       this.app.emit('error', err, this);

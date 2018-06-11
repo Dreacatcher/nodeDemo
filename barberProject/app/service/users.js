@@ -3,10 +3,10 @@ const Service = require('egg').Service;
 const ran = () => {
   const num = new Date().getTime();
   return num.toString().substring(0, 16) + parseInt((Math.round(Math.random() * 30 + 100)));
-}
+};
 const setTimeDateFmt = num => {
   return num < 9 ? '0' + num : num;
-}
+};
 const randomNumber = () => {
   const now = new Date();
   let month = now.getMonth() + 1;
@@ -20,7 +20,7 @@ const randomNumber = () => {
   minutes = setTimeDateFmt(minutes);
   seconds = setTimeDateFmt(seconds);
   return now.getFullYear().toString() + '/' + month.toString() + '/' + day + '  ' + hour + ':' + minutes + ':' + seconds;
-}
+};
 class UserService extends Service {
   async find(name) {
     console.log('2*************************');
@@ -106,8 +106,6 @@ class UserService extends Service {
     const hasName = await this.app.mysql.get('user', {
       username: param.username,
     });
-    hasName.updatetime = randomNumber();
-    console.log(hasName);
     console.log('service-deleteUser-find*************************');
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
     if (hasName && hasName.username) {
