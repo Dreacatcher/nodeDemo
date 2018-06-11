@@ -35,7 +35,7 @@ class UserService extends Service {
     let result = {};
     console.log(ran());
     param.userid = ran();
-    param.createtime = randomNumber();
+    param.createtime = this.app.mysql.literals.now;
     console.log('service-add*************************');
     console.log(param);
     const hasName = await this.app.mysql.get('user', {
@@ -73,7 +73,7 @@ class UserService extends Service {
     const hasName = await this.app.mysql.get('user', {
       username: param.username,
     });
-    hasName.updatetime = randomNumber();
+    hasName.updatetime = this.app.mysql.literals.now;
     console.log(hasName);
     console.log('service-updateUser-find*************************');
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
