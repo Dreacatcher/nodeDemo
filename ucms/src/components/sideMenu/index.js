@@ -4,7 +4,7 @@ import { connect } from 'dva'
 import styles from './index.less'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import menus from '../../config/menus'
-import withRouter from 'umi/withRouter';
+
 const { SubMenu } = Menu
 const { Header, Content, Sider } = Layout
 function LayoutPage({ location, dispatch, layoutModel }) {
@@ -43,15 +43,6 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 	}
 	return (
 		<div className={styles.normal}>
-			<Layout>
-				<Header className="header">
-					<div className="logo" />
-					<Menu theme="dark" mode="horizontal" defaultSelectedKeys={[ '2' ]} style={{ lineHeight: '64px' }}>
-						<Menu.Item key="1">nav 1</Menu.Item>
-						<Menu.Item key="2">nav 2</Menu.Item>
-						<Menu.Item key="3">nav 3</Menu.Item>
-					</Menu>
-				</Header>
 				<Layout>
 					<Sider
 						width={200}
@@ -138,7 +129,7 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 						</Content>
 					</Layout>
 				</Layout>
-			</Layout>
+			
 		</div>
 	)
 }
@@ -147,4 +138,4 @@ LayoutPage.propTypes = {
 	layoutModel: PropTypes.object
 }
 // 指定订阅数据，这里关联了,建立数据关联关系
-export default withRouter(connect(({ layoutModel }) => ({ layoutModel }))(LayoutPage))
+export default connect(({ layoutModel }) => ({ layoutModel }))(LayoutPage)

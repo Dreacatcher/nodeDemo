@@ -1,17 +1,17 @@
 
 export default {
 
-  namespace: 'global',
+  namespace: 'example',
 
   state: {},
 
   subscriptions: {
-    setup({ dispatch, history }) {  // eslint-disable-line
+    setup({ dispatch, history }) {
     },
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {  // eslint-disable-line
+    *fetch({ payload }, { call, put }) {
       yield put({ type: 'save' });
     },
   },
