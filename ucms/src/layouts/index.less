@@ -1,0 +1,46 @@
+@import '../config/base.less';
+.normal {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.content {
+	flex: 1;
+	display: flex;
+}
+
+.main {
+	padding: 0 8px;
+	flex: 1 0 auto;
+}
+.contwp {
+	padding: 24px 24px 0 24px;
+	margin: 0;
+	min-height: 280px;
+	max-height: 640px;
+  overflow: scroll;
+  margin-top: 50px;
+  margin-left: 200px;
+}
+.breadcrumb {
+	padding: 24px 0 24px 24px;
+  text-align: left;
+  background: @white;
+}
+.cont {
+	padding: 24px 24px 0 24px;
+	background: @white;
+	margin: 0;
+	min-height: 280px;
+	max-height: 640px;
+	overflow: scroll;
+}
+:global{
+  .openSide{
+    margin-left: 200px;
+  }
+  .closeSide{
+    margin-left: 80px;
+  }
+}

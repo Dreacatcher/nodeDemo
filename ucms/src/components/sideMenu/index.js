@@ -2,15 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
 import styles from './index.less'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 import menus from '../../config/menus'
 
 const { SubMenu } = Menu
-const { Header, Content, Sider } = Layout
+const { Header, Sider } = Layout
 function LayoutPage({ location, dispatch, layoutModel }) {
 	const { collapsed, openKeys } = layoutModel
 	console.log(layoutModel)
 	const toggle = () => {
+		console.log()
 		const _l = !collapsed
 		dispatch({
 			type: 'layoutModel/changeStates',
@@ -19,6 +20,11 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 				collapsed: _l
 			}
 		})
+		if (!collapsed) {
+			document.querySelector('#gContent').style.marginLeft = '80px'
+		}else{
+      document.querySelector('#gContent').style.marginLeft = '200px'
+    }
 	}
 	const onOpenMenusChange = (param) => {
 		const latestOpenKey = param.find((key) => openKeys.indexOf(key) === -1)
@@ -42,94 +48,54 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 		}
 	}
 	return (
-		<div className={styles.normal}>
-				<Layout>
-					<Sider
-						width={200}
-						style={{ background: '#fff', overflow: 'hidden' }}
-						trigger={null}
-						collapsible
-						collapsed={collapsed}
-					>
-						<Header
-							style={{ background: '#fff', padding: 0, height: '35px', lineHeight: '35px' }}
-							onClick={() => {
-								toggle()
-							}}
-						>
-							<Icon
-								className="trigger"
-								type={collapsed ? 'menu-unfold' : 'menu-fold'}
-								onClick={() => {
-									toggle()
-								}}
-							/>
-						</Header>
-						<div className="logo" />
-						<Menu
-							theme="dark"
-							mode="inline"
-							defaultSelectedKeys={[ '1' ]}
-							inlineCollapsed={collapsed}
-							openKeys={openKeys}
-							onOpenChange={(e) => {
-								onOpenMenusChange(e)
-							}}
-						>
-							{menus.map((item) => {
-								return (
-									<SubMenu
-										key={item.key}
-										title={
-											<span>
-												<Icon type="team" />
-												<span>{item.name}</span>
-											</span>
-										}
-									>
-										{item.children &&
-											item.children.length > 0 &&
-											item.children.map((subItem) => {
-												return <Menu.Item key={subItem.key}>{subItem.name}</Menu.Item>
-											})}
-									</SubMenu>
-								)
-							})}
-						</Menu>
-					</Sider>
+		<div className={styles.sideNormal}>
+			<Sider width={200} className={styles.sideWidth} trigger={null} collapsible collapsed={collapsed}>
+				<Header
+					className={styles.sideHeader}
+					onClick={() => {
+						toggle()
+					}}
+				>
+					<Icon
+						className="trigger"
+						type={collapsed ? 'menu-unfold' : 'menu-fold'}
+						onClick={() => {
+							toggle()
+						}}
+					/>
+				</Header>
 
-					<Layout style={{ padding: '0 24px 24px' }}>
-						<Breadcrumb style={{ margin: '16px 0', textAlgin: 'left' }}>
-							<Breadcrumb.Item>Home</Breadcrumb.Item>
-							<Breadcrumb.Item>List</Breadcrumb.Item>
-							<Breadcrumb.Item>App</Breadcrumb.Item>
-						</Breadcrumb>
-						<Content
-							style={{
-								background: '#fff',
-								padding: 24,
-								margin: 0,
-								minHeight: 280,
-								maxHeight: 640,
-								overflow: 'scroll'
-							}}
-						>
-							<h1 className={styles.title}>Yay! Welcome to dva!</h1>
-							<div className={styles.welcome} />
-							<ul className={styles.list}>
-								<li>
-									To get started, edit <code>src/index.js</code> and save to reload.
-								</li>
-								<li>
-									<a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">
-										Getting Started
-									</a>
-								</li>
-							</ul>
-						</Content>
-					</Layout>
-				</Layout>
-			
+				<Menu
+					theme="dark"
+					mode="inline"
+					defaultSelectedKeys={[ '1' ]}
+					inlineCollapsed={collapsed}
+					openKeys={openKeys}
+					onOpenChange={(e) => {
+						onOpenMenusChange(e)
+					}}
+				>
+					{menus.map((item) => {
+						return (
+							<SubMenu
+								key={item.key}
+								title={
+									<span>
+										<Icon type="team" />
+										<span>{item.name}</span>
+									</span>
+								}
+							>
+								{item.children &&
+									item.children.length > 0 &&
+									item.children.map((subItem) => {
+										return <Menu.Item key={subItem.key}>{subItem.name}</Menu.Item>
+									})}
+							</SubMenu>
+						)
+					})}
+				</Menu>
+			</Sider>
 		</div>
 	)
 }

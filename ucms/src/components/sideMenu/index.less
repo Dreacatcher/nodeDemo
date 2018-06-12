@@ -1,44 +1,24 @@
 @import '../../config/base.less';
-.normal {
+.sideNormal {
 	font-family: Georgia, sans-serif;
 	text-align: center;
+	background: @white;
+	position: absolute;
+	top: 46px;
+	left: 0;
+	z-index: 999;
 }
 
-.title {
-	font-size: 2.5rem;
-	font-weight: normal;
-	letter-spacing: -1px;
+.sideHeader {
+	background: @white;
+	padding: 0;
+	height: 45px;
+	line-height: 45px;
 }
-
-.welcome {
-	height: 328px;
-	background: url(../../assets/yay.jpg) no-repeat center 0;
-	background-size: 388px 328px;
-}
-
-.list {
-	font-size: 1.2em;
-	margin-top: 1.8em;
-	list-style: none;
-	line-height: 1.5em;
-}
-
-.list code {
-	background: #f7f7f7;
-}
-/* ************************/
-:global(#components-layout-demo-custom-trigger .trigger) {
-	font-size: 18px;
-	line-height: 64px;
-	padding: 0 24px;
-	cursor: pointer;
-	transition: color .3s;
-}
-:global(#components-layout-demo-custom-trigger .trigger:hover) {
-	color: #1890ff;
-}
-:global(#components-layout-demo-custom-trigger .logo) {
-	height: 32px;
-	background: rgba(255, 255, 255, .2);
-	margin: 16px;
+.sideWidth {
+	background: @white;
+	padding: 0;
+	height: 45px;
+	clear: both;
+	line-height: 45px;
 }

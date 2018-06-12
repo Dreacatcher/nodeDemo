@@ -1,12 +1,13 @@
 import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
-
+import styles from './index.less'
 function Header({ location }) {
   return (
     <Menu
       selectedKeys={[location.pathname]}
       mode="horizontal"
       theme="dark"
+      className={styles.headerNormal}
     >
       <Menu.Item key="/">
         <Link to="/"><Icon type="home" />Home</Link>
