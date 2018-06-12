@@ -6,7 +6,6 @@
       "style": true
     }]
   ],
-  "theme": "./src/style/theme.js",
    "env": {
     "development": {
       "extraBabelPlugins": [

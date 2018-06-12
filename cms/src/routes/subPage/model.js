@@ -8,7 +8,7 @@
 // 	return request(`/api/users?${qs.stringify(params)}`)
 // }
 export default {
-	namespace: 'indexPage',
+	namespace: 'subPageModel',
 	state: {
 		collapsed: false
 	},

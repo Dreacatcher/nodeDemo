@@ -11,9 +11,9 @@ const app = dva({
 // 2. Plugins
 // app.use({});
 app.use(createLoading());
-// 3. Model
+// 3. Model (统一到router 处修改)
 // app.model(require('./models/example').default);
-app.model(require('./routes/indexPage/model').default);
+
 // 4. Router
 app.router(require('./router').default);
 
