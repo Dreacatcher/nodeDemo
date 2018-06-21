@@ -5,7 +5,7 @@ import styles from './index.less'
 import { Layout, Menu, Icon } from 'antd'
 import menus from '../../config/menus'
 
-const { SubMenu } = Menu
+const { SubMenu,Item } = Menu
 const { Header, Sider } = Layout
 function LayoutPage({ location, dispatch, layoutModel }) {
 	const { collapsed, openKeys } = layoutModel
@@ -59,7 +59,7 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 					onOpenChange={(e) => {
 						onOpenMenusChange(e)
 					}}
-				>
+				><Item disabled className="ttTrigger" >
 					<Header
 						className={styles.sideHeader}
 						onClick={() => {
@@ -67,13 +67,14 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 						}}
 					>
 						<Icon
-							className="trigger"
+              className="trigger"
 							type={collapsed ? 'menu-unfold' : 'menu-fold'}
 							onClick={() => {
 								toggle()
 							}}
 						/>
-					</Header>
+          </Header>
+          </Item>
 					{menus.map((item) => {
 						return (
 							<SubMenu
