@@ -10,7 +10,20 @@ function checkStatus(response) {
 	error.response = response
 	throw error
 }
-
+function setUrl(excerpt, version) {
+	version = version ? version : 'v1'
+	let apiUrl = ''
+	let appName = ''
+	if (excerpt.indexOf('/users') >= 0) {
+		appName = '/cmng-application-personal-center'
+	}
+	if (excerpt.indexOf('http' || 'https') >= 0) {
+		apiUrl = excerpt
+	} else {
+		apiUrl = config.baseURL + appName + '/api/' + version + excerpt
+	}
+	return apiUrl
+}
 /**
  * Requests a URL, returning a promise.
  *
@@ -19,7 +32,12 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default async function request(url, options) {
-	const { method = 'post', headers, timeout=(config.axiosTimeout || 5000), auth = Cookie.get(config.cookie.auth) } = options
+	const {
+		method = 'post',
+		headers,
+		timeout = config.axiosTimeout || 5000,
+		auth = Cookie.get(config.cookie.auth)
+	} = options
 
 	fetch.timeout = timeout
 	fetch.headers = {
@@ -32,34 +50,34 @@ export default async function request(url, options) {
 	}
 	switch (method.toLowerCase()) {
 		case 'get':
-      console.log('get')
-      break;
+			console.log('get')
+			break
 		case 'delete':
-      console.log('delete')
-      break;
+			console.log('delete')
+			break
 		case 'head':
-      console.log('head')
-      break;
+			console.log('head')
+			break
 		case 'post':
-      console.log('post')
-      break;
+			console.log('post')
+			break
 		case 'put':
-      console.log('put')
-      break;
+			console.log('put')
+			break
 		case 'patch':
 			// return await fetch(url, options);
-      console.log('patch')
-      break;
+			console.log('patch')
+			break
 		default:
-      console.log('default')
-      break;
+			console.log('default')
+			break
 	}
-	const response = await fetch(url, options)
+	const response = await fetch(setUrl(url), options)
 	console.log(options)
 	checkStatus(response)
 	const data = await response.json()
 	const ret = {
-		data,
+		data
 	}
 	return ret
 }
