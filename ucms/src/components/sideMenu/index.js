@@ -22,9 +22,9 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 		})
 		if (!collapsed) {
 			document.querySelector('#gContent').style.marginLeft = '80px'
-		}else{
-      document.querySelector('#gContent').style.marginLeft = '200px'
-    }
+		} else {
+			document.querySelector('#gContent').style.marginLeft = '200px'
+		}
 	}
 	const onOpenMenusChange = (param) => {
 		const latestOpenKey = param.find((key) => openKeys.indexOf(key) === -1)
@@ -50,21 +50,6 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 	return (
 		<div className={styles.sideNormal}>
 			<Sider width={200} className={styles.sideWidth} trigger={null} collapsible collapsed={collapsed}>
-				<Header
-					className={styles.sideHeader}
-					onClick={() => {
-						toggle()
-					}}
-				>
-					<Icon
-						className="trigger"
-						type={collapsed ? 'menu-unfold' : 'menu-fold'}
-						onClick={() => {
-							toggle()
-						}}
-					/>
-				</Header>
-
 				<Menu
 					theme="dark"
 					mode="inline"
@@ -75,6 +60,20 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 						onOpenMenusChange(e)
 					}}
 				>
+					<Header
+						className={styles.sideHeader}
+						onClick={() => {
+							toggle()
+						}}
+					>
+						<Icon
+							className="trigger"
+							type={collapsed ? 'menu-unfold' : 'menu-fold'}
+							onClick={() => {
+								toggle()
+							}}
+						/>
+					</Header>
 					{menus.map((item) => {
 						return (
 							<SubMenu

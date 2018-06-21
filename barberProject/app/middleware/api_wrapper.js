@@ -1,17 +1,17 @@
 'use strict'
 const baseResponse = param => {
   let _res = {}
-  if (param.data) {
+  if (param.body) {
     _res = {
       message: param.message ? param.message : 'success',
       status: param.status ? param.status : 200,
-      data: param.data ? param.data : 'null'
+      data: param.body ? param.body : 'null'
     }
   } else {
     _res = {
       message: 'failed',
-      status: param.data ? param.data : 200,
-      data: param.data ? param.data : 'null'
+      status: param.status ? param.status : 200,
+      data: param.body ? param.body : 'null'
     }
   }
   return _res
@@ -40,7 +40,7 @@ module.exports = (ctx, next) => {
       yield next
       console.log('api_wrapper_try*************************')
       console.log(this.response)
-      this.response.body = baseResponse(this.response.body)
+      this.response.body = baseResponse(this.response)
     } catch (err) {
       console.log('api_wrapper_catch*************************' + `${err}`)
       this.body = {
