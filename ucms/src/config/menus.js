@@ -22,12 +22,12 @@ let menus = [{
       key: '21',
       name: '产品列表',
       icon: 'switcher',
-      router: '/productsCenter/productList',
+      router: '/productsCenter/productsList',
     }, {
       key: '22',
       name: '新建产品',
       icon: 'switcher',
-      router: '/productsCenter/productCreate',
+      router: '/productsCenter/productsCreate',
     }, ]
   },
   {

@@ -1,9 +1,9 @@
-import ProductList from './components/productList/index';
+import ProductsList from './components/productsList/index';
 
-export default () => {
-  return (
-    <div>
-      <ProductList />
-    </div>
-  )
+export default (props) => {
+  // 默认组件
+  if (props.location.pathname === '/productsCenter/'||props.location.pathname === '/productsCenter') {
+    return <ProductsList></ProductsList>
+  }
+	return <div>{props.children}</div>
 }

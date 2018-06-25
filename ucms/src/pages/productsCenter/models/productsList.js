@@ -1,7 +1,7 @@
-import * as usersService from '../services/productCreate';
+import * as usersService from '../services/productsList';
 
 export default {
-  namespace: 'productCreateModel',
+  namespace: 'productsListModel',
   state: {
     list: [],
     total: null,
