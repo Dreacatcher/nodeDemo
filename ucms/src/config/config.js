@@ -2,17 +2,15 @@
  * @Author: lcm 
  * @Date: 2018-06-21 14:01:58 
  * @Last Modified by: lcm
- * @Last Modified time: 2018-06-21 16:45:35
+ * @Last Modified time: 2018-06-25 09:04:14
  */
 
 let baseConf = {
   name: '开发关联系统',
   ENV: process.env.NODE_ENV,
+  timestamps: new Date().getTime(), // 全局时间戳
   //统一配置auth
-  cookie: {
-    auth: 'auth_store',
-    user_name: 'user_name_store'
-  },
+  auth: 'auth_store',
   //请求超时时间设置，10s
   axiosTimeout: 10000,
 }

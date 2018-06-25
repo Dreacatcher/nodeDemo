@@ -7,14 +7,14 @@ import menus from '../../config/menus'
 
 const { SubMenu,Item } = Menu
 const { Header, Sider } = Layout
-function LayoutPage({ location, dispatch, layoutModel }) {
-	const { collapsed, openKeys } = layoutModel
-	console.log(layoutModel)
+function SideLayout({ location, dispatch, sideMenuModel }) {
+	const { collapsed, openKeys } = sideMenuModel
+	console.log(sideMenuModel)
 	const toggle = () => {
 		console.log()
 		const _l = !collapsed
 		dispatch({
-			type: 'layoutModel/changeStates',
+			type: 'sideMenuModel/changeStates',
 			payload: {
 				openKeys: [],
 				collapsed: _l
@@ -33,14 +33,14 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 		})
 		if (_menusKey.indexOf(latestOpenKey) === -1) {
 			dispatch({
-				type: 'layoutModel/changeStates',
+				type: 'sideMenuModel/changeStates',
 				payload: {
 					openKeys: param
 				}
 			})
 		} else {
 			dispatch({
-				type: 'layoutModel/changeStates',
+				type: 'sideMenuModel/changeStates',
 				payload: {
 					openKeys: latestOpenKey ? [ latestOpenKey ] : []
 				}
@@ -100,8 +100,8 @@ function LayoutPage({ location, dispatch, layoutModel }) {
 	)
 }
 
-LayoutPage.propTypes = {
-	layoutModel: PropTypes.object
+SideLayout.propTypes = {
+	sideMenuModel: PropTypes.object
 }
 // 指定订阅数据，这里关联了,建立数据关联关系
-export default connect(({ layoutModel }) => ({ layoutModel }))(LayoutPage)
+export default connect(({ sideMenuModel }) => ({ sideMenuModel }))(SideLayout)
