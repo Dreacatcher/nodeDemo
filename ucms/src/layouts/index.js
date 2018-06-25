@@ -11,7 +11,7 @@ function AppLayout({ children, location, appModel }) {
 	if (location.pathname === '/login') {
 		return (
 			<Layout id="gContentWp" className={styles.nologin}>
-				<div className={styles.content}>
+				<div className={styles.normal}>
 					<div className={styles.main}>{children}</div>
 				</div>
 			</Layout>

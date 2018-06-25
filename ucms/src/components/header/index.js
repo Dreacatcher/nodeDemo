@@ -1,8 +1,18 @@
-import { Menu, Icon } from 'antd'
+import { Dropdown, Menu, Icon } from 'antd'
 import Link from 'umi/link'
 import styles from './index.less'
 const logo = require('../../assets/img/logo.png')
 function Header({ location }) {
+	const userMenu = (
+		<Menu>
+			<Menu.Item className={styles.setWidth}> 
+				<Icon type="lock" /> 修改密码
+			</Menu.Item>
+			<Menu.Item className={styles.setWidth}> 
+				<Icon type="logout" /> 退出
+			</Menu.Item>
+		</Menu>
+	)
 	return (
 		<div className="gHeader">
 			<div className="mHdLeft">
@@ -13,7 +23,7 @@ function Header({ location }) {
 					className={styles.headerNormal}
 				>
 					<Menu.Item key="/">
-						<img className={styles.mHdLogo} src={logo} alt=""/>
+						<img className={styles.mHdLogo} src={logo} alt="" />
 					</Menu.Item>
 				</Menu>
 			</div>
@@ -24,9 +34,16 @@ function Header({ location }) {
 					theme="dark"
 					className={styles.headerNormal}
 				>
-					<Menu.Item key="/">
+					<Menu.Item key="/" >
+						<Dropdown overlay={userMenu} placement="bottomCenter">
+							<Link to="/">
+								<Icon type="user" />陆朝明
+							</Link>
+						</Dropdown>
+					</Menu.Item>
+					<Menu.Item key="/message">
 						<Link to="/">
-							<Icon type="home" />主页
+							<Icon type="mail" />
 						</Link>
 					</Menu.Item>
 					<Menu.Item key="/users">
@@ -49,11 +66,7 @@ function Header({ location }) {
 							<Icon type="frown-circle" />404
 						</Link>
 					</Menu.Item>
-					<Menu.Item key="/username" className={styles.positionRight}>
-						<Link to="/page-you-dont-know">
-							<Icon type="frown-circle" />张三
-						</Link>
-					</Menu.Item>
+		
 				</Menu>
 			</div>
 		</div>
