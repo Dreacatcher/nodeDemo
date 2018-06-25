@@ -4,8 +4,8 @@ import { connect } from 'dva'
 import styles from './index.less'
 import { Layout, Menu, Icon } from 'antd'
 import menus from '../../config/menus'
-
-const { SubMenu,Item } = Menu
+import Link from 'umi/link'
+const { SubMenu, Item } = Menu
 const { Header, Sider } = Layout
 function SideLayout({ location, dispatch, sideMenuModel }) {
 	const { collapsed, openKeys } = sideMenuModel
@@ -59,29 +59,30 @@ function SideLayout({ location, dispatch, sideMenuModel }) {
 					onOpenChange={(e) => {
 						onOpenMenusChange(e)
 					}}
-				><Item disabled className="ttTrigger" >
-					<Header
-						className={styles.sideHeader}
-						onClick={() => {
-							toggle()
-						}}
-					>
-						<Icon
-              className="trigger"
-							type={collapsed ? 'menu-unfold' : 'menu-fold'}
+				>
+					<Item disabled className="ttTrigger">
+						<Header
+							className={styles.sideHeader}
 							onClick={() => {
 								toggle()
 							}}
-						/>
-          </Header>
-          </Item>
+						>
+							<Icon
+								className="trigger"
+								type={collapsed ? 'menu-unfold' : 'menu-fold'}
+								onClick={() => {
+									toggle()
+								}}
+							/>
+						</Header>
+					</Item>
 					{menus.map((item) => {
 						return (
 							<SubMenu
 								key={item.key}
 								title={
 									<span>
-										<Icon type="team" />
+										<Icon type={item.icon} />
 										<span>{item.name}</span>
 									</span>
 								}
@@ -89,7 +90,14 @@ function SideLayout({ location, dispatch, sideMenuModel }) {
 								{item.children &&
 									item.children.length > 0 &&
 									item.children.map((subItem) => {
-										return <Menu.Item key={subItem.key}>{subItem.name}</Menu.Item>
+										return (
+											<Menu.Item key={subItem.key}>
+												<Link to={subItem.router}>
+													<Icon type={subItem.icon} />
+													{subItem.name}
+												</Link>
+											</Menu.Item>
+										)
 									})}
 							</SubMenu>
 						)

@@ -1,40 +1,49 @@
 let menus = [{
     key: '1',
-    name: 'Team',
+    name: '会员管理',
+    icon: 'setting',
     children: [{
       key: '11',
-      name: 'Team1',
-      router: '/subPage',
+      name: '会员列表',
+      icon: 'switcher',
+      router: '/users/userList',
     }, {
       key: '12',
-      name: 'Team2',
-      router: '/subPage',
+      name: '会员等级设置',
+      icon: 'switcher',
+      router: '/users/userEdit',
     }, ]
   },
   {
     key: '2',
-    name: 'Team2',
+    name: '产品管理',
+    icon: 'setting',
     children: [{
       key: '21',
-      name: 'Team21',
-      router: '/subPage',
+      name: '产品列表',
+      icon: 'switcher',
+      router: '/productsCenter/productList',
     }, {
       key: '22',
-      name: 'Team22',
-      router: '/subPage',
+      name: '新建产品',
+      icon: 'switcher',
+      router: '/productsCenter/productCreate',
     }, ]
   },
   {
     key: '3',
-    name: 'Team3',
+    name: '文章管理',
+    icon: 'setting',
     children: [{
       key: '31',
-      name: 'Team31',
-      router: '/subPage',
+      name: '文章列表',
+      icon: 'switcher',
+      router: '/articleCenter/articleList',
     }, {
       key: '32',
-      name: 'Team32',
-      router: '/subPage',
+      name: '新建文章',
+      icon: 'switcher',
+      router: '/articleCenter/articleCreate',
     }, ]
   },
 ];

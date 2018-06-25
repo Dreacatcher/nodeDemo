@@ -20,15 +20,15 @@ export default {
 			// if (store.get(auth)) {
 			if (true) {
 				// 后期再每个接口处，把token 加载在header里，后端去读取检验token有效性，失效返回登录页
-				yield put(
-					routerRedux.push({
-						pathname: '/',
-						query: {
-							key: timestamps
-						}
-					})
-				)
-				yield put({ type: 'updateState', payload: { isLogged: true } })
+				// yield put(
+				// 	routerRedux.push({
+				// 		pathname: '/',
+				// 		query: {
+				// 			key: timestamps
+				// 		}
+				// 	})
+				// )
+			
 			} else {
 				yield put(
 					routerRedux.push({
@@ -38,7 +38,7 @@ export default {
 						}
 					})
 				)
-				yield put({ type: 'updateState', payload: { isLogged: false } })
+			
 			}
 		}
 	},
