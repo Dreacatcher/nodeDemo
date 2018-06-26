@@ -1,7 +1,7 @@
 import fetch from 'dva/fetch'
 import config from '../config/config'
 import pathConfig from '../config/path.config.js'
-import Cookie from 'cookie'
+// import Cookie from 'cookie'
 
 function checkStatus(response) {
 	if (response.status >= 200 && response.status < 300) {
@@ -24,7 +24,8 @@ export default async function request(url, options) {
 		method = 'post',
 		headers,
 		timeout = config.axiosTimeout || 5000,
-		auth = Cookie.get(config.cookie.auth)
+		// auth = Cookie.get(config.auth) || ''
+		auth = ''
 	} = options
 
 	fetch.timeout = timeout
@@ -34,7 +35,8 @@ export default async function request(url, options) {
 		'Cache-Control': 'no-cache',
 		Pragma: 'no-cache',
 		Expires: -1,
-		Flag: 1
+		Flag: 1,
+		'x-csrf-token': 'RlYx9HdOH00vcE6XhGWzN0vk'
 	}
 	switch (method.toLowerCase()) {
 		case 'get':
@@ -47,6 +49,7 @@ export default async function request(url, options) {
 			console.log('head')
 			break
 		case 'post':
+			fetch.headers['Content-type'] = 'application/x-www-form-urlencoded'
 			console.log('post')
 			break
 		case 'put':

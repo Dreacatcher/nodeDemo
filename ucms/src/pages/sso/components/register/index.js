@@ -32,13 +32,18 @@ function Register({ location, dispatch, registerModel, props, form }) {
 		}
 	}
 	const handleSubmit = (e) => {
-    e.preventDefault()
-    debugger
+		e.preventDefault()
+
 		form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values)
 			}
 		})
+		dispatch({
+			type: 'registerModel/create',
+			payload: {}
+		})
+		debugger
 	}
 	const handleConfirmBlur = (e) => {
 		const value = e.target.value
@@ -53,7 +58,7 @@ function Register({ location, dispatch, registerModel, props, form }) {
 	}
 	const compareToFirstPassword = (rule, value, callback) => {
 		if (value && value !== form.getFieldValue('password')) {
-			callback('Two passwords that you enter is inconsistent!')
+			callback('两次输入密码不一样，请重新输入!')
 		} else {
 			callback()
 		}
@@ -74,19 +79,17 @@ function Register({ location, dispatch, registerModel, props, form }) {
 		</Select>
 	)
 
-
-
 	return (
 		<div className={styles.registerWp}>
-      <h2 className={styles.registerTt}>会员注册</h2>
-			<Form onSubmit={()=>{handleSubmit()}}>
+			<h2 className={styles.registerTt}>会员注册</h2>
+			<Form
+				onSubmit={(e) => {
+					handleSubmit(e)
+				}}
+			>
 				<FormItem {...formItemLayout} label="用户名">
 					{getFieldDecorator('name', {
 						rules: [
-							{
-								type: 'text',
-								message: '用户名格式输入有误!'
-							},
 							{
 								required: true,
 								message: '请输入用户名!'
@@ -111,6 +114,7 @@ function Register({ location, dispatch, registerModel, props, form }) {
 				<FormItem {...formItemLayout} label="密码">
 					{getFieldDecorator('password', {
 						rules: [
+            
 							{
 								required: true,
 								message: '请输入密码!'
@@ -132,9 +136,16 @@ function Register({ location, dispatch, registerModel, props, form }) {
 								validator: compareToFirstPassword
 							}
 						]
-					})(<Input type="password" onBlur={(e)=>{handleConfirmBlur(e)}} />)}
+					})(
+						<Input
+							type="password"
+							onBlur={(e) => {
+								handleConfirmBlur(e)
+							}}
+						/>
+					)}
 				</FormItem>
-			
+
 				{/* <FormItem {...formItemLayout} label="地址">
 					{getFieldDecorator('residence', {
 						initialValue: [ 'zhejiang', 'hangzhou', 'xihu' ],

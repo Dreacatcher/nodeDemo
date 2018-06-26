@@ -25,7 +25,9 @@ class UserService extends Service {
     console.log('service-add*************************')
     console.log(param)
     const hasName = await this.app.mysql.get('user', {
-      username: param.username
+      username: param.username,
+      password: param.password,
+      mobile: param.mobile
     })
     console.log(hasName)
     console.log('service-add-find*************************')
