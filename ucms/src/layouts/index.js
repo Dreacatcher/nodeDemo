@@ -10,7 +10,7 @@ import { Layout, Breadcrumb } from 'antd'
 const { Content } = Layout
 
 function AppLayout({ children, location, dispatch, appModel }) {
-	if (location.pathname === '/login') {
+	if (location.pathname === '/sso/login'||location.pathname === '/sso/register') {
 		return (
 			<Layout id="gContentWp" className={styles.nologin}>
 				<div className={styles.normal}>

@@ -37,13 +37,12 @@ export default {
 			dispatch({
 				type: 'getLoginStatus'
       })
-      
 		}
 	},
 	effects: {
 		*getLoginStatus({ payload }, { call, put, select }) {
 			// if (store.get(auth)) {
-			if (true) {
+			if (false) {
 				// 后期再每个接口处，把token 加载在header里，后端去读取检验token有效性，失效返回登录页
 				// yield put(
 				// 	routerRedux.push({
@@ -57,7 +56,7 @@ export default {
 			} else {
 				yield put(
 					routerRedux.push({
-						pathname: '/login'
+						pathname: '/sso/login'
 					})
 				)
 			}
