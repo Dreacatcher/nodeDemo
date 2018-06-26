@@ -2,7 +2,7 @@
  * @Author: lcm 
  * @Date: 2018-06-21 14:01:58 
  * @Last Modified by: lcm
- * @Last Modified time: 2018-06-25 10:34:15
+ * @Last Modified time: 2018-06-26 19:02:15
  */
 
 let baseConf = {
@@ -17,5 +17,6 @@ let baseConf = {
 }
 if ('development' === '' + baseConf.ENV) {
   baseConf.baseURL = 'http://127.0.0.1:7001';
+  baseConf.baseENV = '开发环境';
 }
 module.exports = baseConf

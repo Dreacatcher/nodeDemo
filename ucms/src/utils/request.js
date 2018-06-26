@@ -1,5 +1,6 @@
 import fetch from 'dva/fetch'
 import config from '../config/config'
+import pathConfig from '../config/path.config.js'
 import Cookie from 'cookie'
 
 function checkStatus(response) {
@@ -10,20 +11,7 @@ function checkStatus(response) {
 	error.response = response
 	throw error
 }
-function setUrl(excerpt, version) {
-	version = version ? version : 'v1'
-	let apiUrl = ''
-	let appName = ''
-	if (excerpt.indexOf('/users') >= 0) {
-		appName = '/cmng-application-personal-center'
-	}
-	if (excerpt.indexOf('http' || 'https') >= 0) {
-		apiUrl = excerpt
-	} else {
-		apiUrl = config.baseURL + appName + '/api/' + version + excerpt
-	}
-	return apiUrl
-}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -72,7 +60,7 @@ export default async function request(url, options) {
 			console.log('default')
 			break
 	}
-	const response = await fetch(setUrl(url), options)
+	const response = await fetch(pathConfig(url), options)
 	console.log(options)
 	checkStatus(response)
 	const data = await response.json()
