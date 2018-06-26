@@ -9,9 +9,6 @@ export default {
 	},
 	subscriptions: {
 		setup({ dispatch, location,history }) {
-      console.log('11111111111')
-      console.log(history)
-      console.log(location)
 			dispatch({
 				type: 'getLoginStatus'
 			})
