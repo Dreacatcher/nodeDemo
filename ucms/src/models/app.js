@@ -2,16 +2,42 @@ import { routerRedux } from 'dva/router'
 // import { timestamps, auth } from '../config/config'
 // import store from 'storejs'
 
+function setTimestamps(location,dispatch){
+  const timestamps = new Date().getTime()
+  if (location&&!location.query.key) {
+    if(location.search===''){
+      dispatch(
+        routerRedux.push({
+          pathname: location.pathname,
+          query: {
+            key: timestamps
+          },
+        })
+      )
+    }else{
+      dispatch(
+        routerRedux.push({
+          pathname: location.pathname,
+          search:location.search+'&key='+timestamps
+        })
+      )
+    }
+	}
+}
 export default {
 	namespace: 'appModel',
 	state: {
 		isLogged: false
 	},
 	subscriptions: {
-		setup({ dispatch, location,history }) {
+		setup({ dispatch,history }) {
+      history.listen(location => { // 监听路
+        setTimestamps(location,dispatch)
+      });
 			dispatch({
 				type: 'getLoginStatus'
-			})
+      })
+      
 		}
 	},
 	effects: {

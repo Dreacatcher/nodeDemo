@@ -2,36 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
 import styles from './index.less'
-import { routerRedux } from 'dva/router'
-import { timestamps } from '../config/config'
+
 import SideMenu from '../components/sideMenu/index'
 import Header from '../components/header/index'
 // import withRouter from 'umi/withRouter'
 import { Layout, Breadcrumb } from 'antd'
 const { Content } = Layout
-function setTimestamps(location,dispatch){
-  if (!location.query.key) {
-    if(location.search===''){
-      dispatch(
-        routerRedux.push({
-          pathname: location.pathname,
-          query: {
-            key: timestamps
-          },
-        })
-      )
-    }else{
-      dispatch(
-        routerRedux.push({
-          pathname: location.pathname,
-          search:location.search+'&key='+timestamps
-        })
-      )
-    }
-	}
-}
+
 function AppLayout({ children, location, dispatch, appModel }) {
-	setTimestamps(location,dispatch)
 	if (location.pathname === '/login') {
 		return (
 			<Layout id="gContentWp" className={styles.nologin}>
