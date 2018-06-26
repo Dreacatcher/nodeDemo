@@ -9,9 +9,7 @@ const { SubMenu, Item } = Menu
 const { Header, Sider } = Layout
 function SideLayout({ location, dispatch, sideMenuModel }) {
 	const { collapsed, openKeys } = sideMenuModel
-	console.log(sideMenuModel)
 	const toggle = () => {
-		console.log()
 		const _l = !collapsed
 		dispatch({
 			type: 'sideMenuModel/changeStates',

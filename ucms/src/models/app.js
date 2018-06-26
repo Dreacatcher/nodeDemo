@@ -1,5 +1,4 @@
 import { routerRedux } from 'dva/router'
-import { timestamps } from '../config/config'
 // import { timestamps, auth } from '../config/config'
 // import store from 'storejs'
 
@@ -9,7 +8,10 @@ export default {
 		isLogged: false
 	},
 	subscriptions: {
-		setup({ dispatch, history }) {
+		setup({ dispatch, location,history }) {
+      console.log('11111111111')
+      console.log(history)
+      console.log(location)
 			dispatch({
 				type: 'getLoginStatus'
 			})
@@ -32,13 +34,9 @@ export default {
 			} else {
 				yield put(
 					routerRedux.push({
-						pathname: '/login',
-						query: {
-							key: timestamps
-						}
+						pathname: '/login'
 					})
 				)
-			
 			}
 		}
 	},
