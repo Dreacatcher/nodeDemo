@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
+
 import styles from './index.less'
 import { Form, Input, Select, Row, Col, Checkbox, Button } from 'antd'
 const FormItem = Form.Item
@@ -36,12 +37,10 @@ function Register({ location, dispatch, registerModel, props, form }) {
 		form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values)
-			}
+      }
 			dispatch({
 				type: 'registerModel/create',
-				payload: {
-					values
-				}
+				payload: values
 			})
 		})
 	}
