@@ -42,6 +42,8 @@ exports.create = async ctx => {
       required: true
     }
   })
+  console.log('111111188888888888')
+  console.log(ctx)
   const vResult = userSchema.validate(ctx.request.body)
   ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
   if (vResult.valid) {
@@ -67,7 +69,7 @@ exports.update = async ctx => {
     }
   })
   const vResult = userSchema.validate(ctx.request.body)
-  // console.log(ctx.param.id)
+ 
   ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
   // ctx.request.body.id = ctx.param.id
   if (vResult.valid) {
