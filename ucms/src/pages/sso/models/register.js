@@ -1,5 +1,6 @@
 import { create } from '../services/register'
-
+import { routerRedux } from 'dva/router'
+import { notification } from 'antd'
 export default {
 	namespace: 'registerModel',
 	state: {
@@ -20,7 +21,17 @@ export default {
 	effects: {
 		*create({ payload: values }, { call, put, select }) {
 			let result = yield call(create, values)
-			console.log(result)
+			debugger
+			if (result.status === 200) {
+				routerRedux.push({
+					pathname: '/login'
+				})
+			} else {
+				notification.open({
+					message: '温馨提示',
+					description: result.data.message
+				})
+			}
 		}
 	},
 	subscriptions: {

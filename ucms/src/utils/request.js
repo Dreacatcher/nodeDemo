@@ -12,7 +12,6 @@ function checkStatus(response) {
 }
 
 function setOptions(_options) {
-  
 	const {
     method = 'POST',
 		headers,
