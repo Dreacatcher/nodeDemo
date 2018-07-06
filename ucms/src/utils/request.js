@@ -6,14 +6,13 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
 }
 
 function setOptions(_options) {
-  debugger
+  
 	const {
     method = 'POST',
 		headers,
@@ -31,7 +30,6 @@ function setOptions(_options) {
 		Flag: 1,
 		'x-csrf-token': 'RlYx9HdOH00vcE6XhGWzN0vk'
   }
-  debugger
 	switch (method.toLowerCase()) {
 		case 'get':
 			console.log('get')
