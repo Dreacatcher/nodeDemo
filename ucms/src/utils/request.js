@@ -64,10 +64,10 @@ function setOptions(_options) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default async function request(url, options) {
+export default async function request(options) {
   options = setOptions(options)
   options.body = stringify(options.body)
-  const response = await fetch(pathConfig(url), options);
+  const response = await fetch(pathConfig(options.url), options);
   checkStatus(response);
   const data = await response.json();
   return data;
