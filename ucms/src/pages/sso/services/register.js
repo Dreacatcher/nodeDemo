@@ -1,8 +1,12 @@
 import request from '../../../utils/request';
 
 export function create(params) {
-  return request('/users',{
+  debugger
+  console.log('111111111')
+  console.log(params)
+  return request({
+    url:'/users',
     method: 'POST',
-    data: params,
+    body: params,
   });
 }

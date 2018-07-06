@@ -33,22 +33,21 @@ function Register({ location, dispatch, registerModel, props, form }) {
 	}
 	const handleSubmit = (e) => {
 		e.preventDefault()
-
 		form.validateFieldsAndScroll((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values)
 			}
+			dispatch({
+				type: 'registerModel/create',
+				payload: {
+					values
+				}
+			})
 		})
-		dispatch({
-			type: 'registerModel/create',
-			payload: {}
-		})
-		debugger
 	}
 	const handleConfirmBlur = (e) => {
 		const value = e.target.value
 		const _confirmDirty = confirmDirty || !!value
-
 		dispatch({
 			type: 'registerModel/updateStates',
 			payload: {
@@ -88,7 +87,7 @@ function Register({ location, dispatch, registerModel, props, form }) {
 				}}
 			>
 				<FormItem {...formItemLayout} label="用户名">
-					{getFieldDecorator('name', {
+					{getFieldDecorator('username', {
 						rules: [
 							{
 								required: true,
@@ -114,7 +113,6 @@ function Register({ location, dispatch, registerModel, props, form }) {
 				<FormItem {...formItemLayout} label="密码">
 					{getFieldDecorator('password', {
 						rules: [
-            
 							{
 								required: true,
 								message: '请输入密码!'
@@ -153,7 +151,7 @@ function Register({ location, dispatch, registerModel, props, form }) {
 					})(<Cascader options={residences} />)}
 				</FormItem> */}
 				<FormItem {...formItemLayout} label="手机号码">
-					{getFieldDecorator('phone', {
+					{getFieldDecorator('mobile', {
 						rules: [ { required: true, message: '请输入手机号码!' } ]
 					})(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
 				</FormItem>

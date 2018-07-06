@@ -21,26 +21,16 @@ export default {
   },
   effects: {
     * create({
-      payload: values
+      payload
     }, {
       call,
       put,
       select
     }) {
-      let {
-        password,
-        username,
-        mobile
-      } = yield select(
-        (d) => d.registerModel
-      )
+      console.log(payload.values)
       debugger
       let result = yield call(
-        create, {
-          password,
-          username,
-          mobile
-        }
+        create, payload.values
       )
       console.log(result)
       debugger
