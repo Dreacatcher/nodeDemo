@@ -21,15 +21,14 @@ export default {
 	effects: {
 		*create({ payload: values }, { call, put, select }) {
 			let result = yield call(create, values)
-			debugger
+      console.log(result)
+     
 			if (result.status === 200) {
-				routerRedux.push({
-					pathname: '/login'
-				})
+				yield put(routerRedux.push('/sso/login'));
 			} else {
 				notification.open({
 					message: '温馨提示',
-					description: result.data.message
+					description: result.data.data.message
 				})
 			}
 		}

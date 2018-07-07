@@ -2,7 +2,7 @@
  * @Author: lcm 
  * @Date: 2018-06-21 14:01:58 
  * @Last Modified by: lcm
- * @Last Modified time: 2018-06-26 19:02:15
+ * @Last Modified time: 2018-07-07 11:07:11
  */
 
 let baseConf = {
@@ -12,7 +12,7 @@ let baseConf = {
   //统一配置auth
   auth: 'auth_store',
   //请求超时时间设置，10s
-  axiosTimeout: 10000,
+  axiosTimeout: 100000,
   logo: require('../assets/img/logo.png'),
 }
 if ('development' === '' + baseConf.ENV) {

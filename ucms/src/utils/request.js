@@ -69,5 +69,13 @@ export default async function request(options) {
   const response = await fetch(pathConfig(options.url), options);
   checkStatus(response);
   const data = await response.json();
-  return data;
+  const res = {
+    data,
+    headers: {},
+  };
+  if (response.headers.get('x-total-count')) {
+    res.headers['x-total-count'] = response.headers.get('x-total-count');
+  }
+  return res;
+
 }
