@@ -7,6 +7,7 @@ const Base64 = require('js-base64').Base64
 var format = require('date-format')
 const AJS = require('another-json-schema')
 const uuidv1 = require('uuid/v1')
+const { pswReg, mobileReg, userNameReg } = require('../../utils/verify')
 exports.index = async (ctx) => {
 	const name = ctx.query.name
 	const userSchema = AJS('userSchema', {
@@ -31,19 +32,22 @@ exports.create = async (ctx) => {
 	const userSchema = AJS('userSchema', {
 		username: {
 			type: 'string',
-			required: true
+			required: true,
+			pattern: userNameReg
 		},
+
 		password: {
 			type: 'string',
-			required: true
+			required: true,
+			pattern: pswReg
 		},
 		mobile: {
 			type: 'string',
-			required: true
+			required: true,
+			pattern: mobileReg
 		}
 	})
 	const vResult = userSchema.validate(ctx.request.body)
-	console.log(ctx)
 	ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
 	if (vResult.valid) {
 		ctx.request.body.createtime = format('yy/MM/dd hh/mm/ss', new Date())
@@ -51,7 +55,12 @@ exports.create = async (ctx) => {
 		ctx.request.body.uid = uuidv1()
 		ctx.body = await ctx.service.users.addUser(ctx.request.body)
 	} else {
-		ctx.body = vResult.error
+		ctx.body = {
+			data: null,
+			message: JSON.stringify(vResult.error)
+		}
+		ctx.status = 400
+		ctx.message = JSON.stringify(vResult.error)
 	}
 }
 

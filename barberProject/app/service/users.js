@@ -26,13 +26,12 @@ class UserService extends Service {
     console.log(param)
     const hasName = await this.app.mysql.get('user', {
       username: param.username,
-      password: param.password,
       mobile: param.mobile
     })
     console.log(hasName)
     console.log('service-add-find*************************')
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    if (hasName && hasName.id) {
+    if (hasName && hasName.userid) {
       result = {
         message: '用户已经存在',
         data: 'null'
