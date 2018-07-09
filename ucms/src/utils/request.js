@@ -7,7 +7,7 @@ import config from '../config/config'
 import pathConfig from '../config/path.config.js'
 
 const fetch = (options) => {
-  console.log(options)
+	console.log(options)
 	let {
 		method = 'POST',
 		headers,
@@ -17,21 +17,21 @@ const fetch = (options) => {
 		body,
 		url
 	} = options
-	options.timeout = timeout
-	options.headers = {
+	headers = {
 		...headers,
 		auth,
 		'Cache-Control': 'no-cache',
 		Pragma: 'no-cache',
+		'Content-type': 'application/x-www-form-urlencoded',
 		Expires: -1,
 		Flag: 1,
 		'x-csrf-token': 'RlYx9HdOH00vcE6XhGWzN0vk'
 	}
 	const cloneData = lodash.cloneDeep(body)
 	try {
-		if (!(url.match(/[a-zA-z]+:\/\/[^/]*/))) {
+		if (!url.match(/[a-zA-z]+:\/\/[^/]*/)) {
 			url = pathConfig(url)
-		} 
+		}
 	} catch (e) {
 		message.error(e.message)
 	}
@@ -71,7 +71,10 @@ const fetch = (options) => {
 				data: cloneData
 			})
 		case 'post':
-			return axios.post(url, before(cloneData), {
+			// axios.defaults.headers['Content-type'] = 'application/x-www-form-urlencoded'
+			return axios.post(url, before(body), {
+				headers,
+				timeout,
 				withCredentials: false
 			})
 		case 'put':
@@ -80,28 +83,28 @@ const fetch = (options) => {
 			return axios.patch(url, cloneData)
 		default:
 			return axios(options)
-  }
+	}
 }
 
 const loginOut = (code) => {
-  switch (code){
-    case 108:
-      message.error('登录超时，请重新登录');
-      //清除所有cookie
-      //跳转至登录页面
-      break;
-    case 200:
-          break;
-    default:
-      //清除所有cookie
-          break;
-  }
-};
+	switch (code) {
+		case 108:
+			message.error('登录超时，请重新登录')
+			//清除所有cookie
+			//跳转至登录页面
+			break
+		case 200:
+			break
+		default:
+			//清除所有cookie
+			break
+	}
+}
 
 export default function request(options) {
 	return fetch(options)
 		.then((response) => {
-      loginOut(response.status);
+			loginOut(response.status)
 			return response
 			// const { statusText, status } = response
 			// // loginOut(response.status);
