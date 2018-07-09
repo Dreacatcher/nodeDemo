@@ -106,15 +106,6 @@ export default function request(options) {
 		.then((response) => {
 			loginOut(response.status)
 			return response
-			// const { statusText, status } = response
-			// // loginOut(response.status);
-			// let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
-			// return {
-			//   success: true,
-			//   message: statusText,
-			//   status,
-			//   ...data,
-			// }
 		})
 		.catch((error) => {
 			const { response } = error
