@@ -21,10 +21,13 @@ export default {
 	effects: {
 		*create({ payload: values }, { call, put, select }) {
 			let result = yield call(create, values)
-      console.log(result)
-     
+			console.log(result)
 			if (result.status === 200) {
-				yield put(routerRedux.push('/sso/login'));
+				notification.open({
+					message: '温馨提示',
+					description: result.data.data.message
+				})
+				yield put(routerRedux.push('/sso/login'))
 			} else {
 				notification.open({
 					message: '温馨提示',

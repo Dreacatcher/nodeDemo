@@ -1,26 +1,24 @@
-import fetch from 'dva/fetch';
-import pathConfig from '../config/path.config.js'
+import axios from 'axios'
+import qs from 'qs'
+import jsonp from 'jsonp'
+import lodash from 'lodash'
+import { message } from 'antd'
 import config from '../config/config'
-import { stringify } from 'qs'
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
-}
+import pathConfig from '../config/path.config.js'
 
-function setOptions(_options) {
-	const {
-    method = 'POST',
+const fetch = (options) => {
+  console.log(options)
+	let {
+		method = 'POST',
 		headers,
 		timeout = config.axiosTimeout || 5000,
 		// auth = Cookie.get(config.auth) || ''
-		auth = ''
-	} = _options
-	_options.timeout = timeout
-	_options.headers = {
+		auth = '',
+		body,
+		url
+	} = options
+	options.timeout = timeout
+	options.headers = {
 		...headers,
 		auth,
 		'Cache-Control': 'no-cache',
@@ -28,54 +26,112 @@ function setOptions(_options) {
 		Expires: -1,
 		Flag: 1,
 		'x-csrf-token': 'RlYx9HdOH00vcE6XhGWzN0vk'
-  }
+	}
+	const cloneData = lodash.cloneDeep(body)
+	try {
+		if (!(url.match(/[a-zA-z]+:\/\/[^/]*/))) {
+			url = pathConfig(url)
+		} 
+	} catch (e) {
+		message.error(e.message)
+	}
+	if (method === 'JSONP') {
+		return new Promise((resolve, reject) => {
+			jsonp(
+				url,
+				{
+					param: `${qs.stringify(body)}&callback`,
+					name: `jsonp_${new Date().getTime()}`,
+					timeout: timeout
+				},
+				(error, result) => {
+					if (error) {
+						reject(error)
+					}
+					resolve({
+						statusText: 'OK',
+						status: 200,
+						data: result
+					})
+				}
+			)
+		})
+	}
+	// 转化参数
+	const before = function(params) {
+		return qs.stringify(params)
+	}
 	switch (method.toLowerCase()) {
 		case 'get':
-			console.log('get')
-			break
+			return axios.get(url, {
+				params: cloneData
+			})
 		case 'delete':
-			console.log('delete')
-			break
-		case 'head':
-			console.log('head')
-			break
+			return axios.delete(url, {
+				data: cloneData
+			})
 		case 'post':
-			_options.headers['Content-type'] = 'application/x-www-form-urlencoded'
-			console.log('post')
-			break
+			return axios.post(url, before(cloneData), {
+				withCredentials: false
+			})
 		case 'put':
-			console.log('put')
-			break
+			return axios.put(url, cloneData)
 		case 'patch':
-			// return await fetch(url, options);
-			console.log('patch')
-			break
+			return axios.patch(url, cloneData)
 		default:
-			console.log('default')
-			break
-	}
-	return _options
-}
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
-export default async function request(options) {
-  options = setOptions(options)
-  options.body = stringify(options.body)
-  const response = await fetch(pathConfig(options.url), options);
-  checkStatus(response);
-  const data = await response.json();
-  const res = {
-    data,
-    headers: {},
-  };
-  if (response.headers.get('x-total-count')) {
-    res.headers['x-total-count'] = response.headers.get('x-total-count');
+			return axios(options)
   }
-  return res;
+}
 
+const loginOut = (code) => {
+  switch (code){
+    case 108:
+      message.error('登录超时，请重新登录');
+      //清除所有cookie
+      //跳转至登录页面
+      break;
+    case 200:
+          break;
+    default:
+      //清除所有cookie
+          break;
+  }
+};
+
+export default function request(options) {
+	return fetch(options)
+		.then((response) => {
+      loginOut(response.status);
+			return response
+			// const { statusText, status } = response
+			// // loginOut(response.status);
+			// let data = options.fetchType === 'YQL' ? response.data.query.results.json : response.data
+			// return {
+			//   success: true,
+			//   message: statusText,
+			//   status,
+			//   ...data,
+			// }
+		})
+		.catch((error) => {
+			const { response } = error
+			let msg
+			let status
+			let otherData = {}
+			if (response) {
+				const { data, statusText } = response
+				otherData = data
+				status = response.status
+				msg = data.message || statusText
+			} else {
+				status = 600
+				msg = 'Network Error'
+			}
+			return {
+				success: false,
+				status,
+				message: msg,
+				...otherData
+			}
+		})
 }
