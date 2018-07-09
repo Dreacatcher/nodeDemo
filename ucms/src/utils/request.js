@@ -7,7 +7,6 @@ import config from '../config/config'
 import pathConfig from '../config/path.config.js'
 
 const fetch = (options) => {
-	console.log(options)
 	let {
 		method = 'POST',
 		headers,
