@@ -38,7 +38,7 @@ export default {
 	subscriptions: {
 		setup({ dispatch, history }) {
 			return history.listen(({ pathname, query }) => {
-				console.log('login -  model - ssss')
+				// console.log('login -  model - ssss')
 			})
 		}
 	}

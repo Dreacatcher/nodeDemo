@@ -42,7 +42,7 @@ export default {
 							pathname: '/sso/login'
 						})
 					)
-				}
+        }
 				// 监听路
 				setTimestamps(location, dispatch) // 增加url时间戳
 			})
