@@ -7,7 +7,6 @@ const Base64 = require('js-base64').Base64
 var format = require('date-format')
 const AJS = require('another-json-schema')
 const uuidv1 = require('uuid/v1')
-const { pswReg, mobileReg, userNameReg } = require('../../utils/verify')
 exports.index = async (ctx) => {
 	const name = ctx.query.name
 	const userSchema = AJS('userSchema', {
@@ -32,22 +31,20 @@ exports.create = async (ctx) => {
 	const userSchema = AJS('userSchema', {
 		username: {
 			type: 'string',
-			required: true,
-			pattern: userNameReg
+			required: true
 		},
-
 		password: {
 			type: 'string',
-			required: true,
-			pattern: pswReg
+			required: true
 		},
 		mobile: {
 			type: 'string',
-			required: true,
-			pattern: mobileReg
+			pattern: /^[0-9]{11}$/,
+			required: true
 		}
 	})
 	const vResult = userSchema.validate(ctx.request.body)
+	console.log(ctx)
 	ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
 	if (vResult.valid) {
 		ctx.request.body.createtime = format('yy/MM/dd hh/mm/ss', new Date())
@@ -65,6 +62,53 @@ exports.create = async (ctx) => {
 }
 
 exports.show = async () => {}
+exports.login = async (ctx) => {
+	const userSchema = AJS('userSchema', {
+		username: {
+			type: 'string',
+			required: true
+		},
+		password: {
+			type: 'string',
+			required: true
+		}
+	})
+	const vResult = userSchema.validate(ctx.query)
+	ctx.query.password = Base64.encode(md5(ctx.query.password))
+	if (vResult.valid) {
+		let result = await ctx.service.users.find(ctx.query.username)
+		if (result.data.password === ctx.query.password) {
+			const token = md5(ctx.query.password + md5(ctx.query.username))
+			result.data.token = token
+			let updateResult = await ctx.service.users.updateUser(result.data)
+			if (updateResult.status === 200) {
+				ctx.body = {
+          data: 'null',
+          token,
+					message: '登陆成功'
+				}
+			} else {
+				ctx.body = {
+					data: 'null',
+					message: '登陆失败'
+				}
+				ctx.status = 500
+			}
+		} else {
+			ctx.body = {
+				data: 'null',
+				message: '密码错误'
+			}
+		}
+	} else {
+		ctx.body = {
+			data: null,
+			message: JSON.stringify(vResult.error)
+		}
+		ctx.status = 400
+		ctx.message = JSON.stringify(vResult.error)
+	}
+}
 exports.update = async (ctx) => {
 	const userSchema = AJS('userSchema', {
 		username: {

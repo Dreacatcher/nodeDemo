@@ -65,17 +65,19 @@ class UserService extends Service {
     console.log('service-updateUser-find*************************')
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
     if (hasName && hasName.username) {
-      const insertResult = await this.app.mysql.update('user', hasName)
+      const insertResult = await this.app.mysql.update('user', param)
       const insertSuccess = insertResult.affectedRows === 1
       if (!insertSuccess) {
         result = {
           message: '更新失败',
-          data: insertSuccess
+          data: insertSuccess,
+          status: 500
         }
       } else {
         result = {
           message: '更新成功',
-          data: 'null'
+          data: 'null',
+          status: 200
         }
       }
     } else {

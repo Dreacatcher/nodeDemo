@@ -19,7 +19,7 @@ module.exports = app => {
   // app.put('/api/table',app.oAuth2Server.authenticate(), 'tableinfo.update')
   // app.del('/api/table/:res',app.oAuth2Server.authenticate(), 'tableinfo.destroy')
 
-  // app.get('/api/restql/:res','restql.index')
+  app.get(_cmng + '/api/v1/login', controller.v1.users.login)
   // app.get('/api/restql/:res/:id','restql.show')
   // app.post('/api/restql/:res',app.oAuth2Server.authenticate(), 'restql.create')
   // app.put('/api/restql/:res/:id',app.oAuth2Server.authenticate(), 'restql.update')
