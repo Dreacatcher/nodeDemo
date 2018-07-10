@@ -2,7 +2,7 @@
  * @Author: lcm 
  * @Date: 2018-06-26 19:23:59 
  * @Last Modified by: lcm
- * @Last Modified time: 2018-06-26 19:24:19
+ * @Last Modified time: 2018-07-10 14:37:07
  */
 
 import config from './config'
@@ -10,7 +10,7 @@ export default function setUrl(excerpt, version) {
 	version = version ? version : 'v1'
 	let apiUrl = ''
 	let appName = ''
-	if (excerpt.indexOf('/users') >= 0) {
+	if (excerpt.indexOf('/users') >= 0|| excerpt.indexOf('/login') >= 0) {
 		appName = '/cmng-application-personal-center'
 	}
 	if (excerpt.indexOf('http' || 'https') >= 0) {

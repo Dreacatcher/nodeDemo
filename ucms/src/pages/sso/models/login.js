@@ -1,5 +1,8 @@
-// import { create } from '../services/login'
-
+import { login } from '../services/login'
+import { auth } from '../../../config/config'
+import { notification } from 'antd'
+import Cookies from 'js-cookie'
+import { routerRedux } from 'dva/router'
 export default {
 	namespace: 'loginModel',
 	state: {},
@@ -12,40 +15,21 @@ export default {
 		}
 	},
 	effects: {
-		// *fetch({ payload: { page = 1 } }, { call, put }) {
-		// 	const { data, headers } = yield call(fetch, { page })
-		// 	yield put({
-		// 		type: 'save',
-		// 		payload: {
-		// 			data,
-		// 			total: parseInt(headers['x-total-count'], 10),
-		// 			page: parseInt(page, 10)
-		// 		}
-		// 	})
-		// }
-		// *remove({ payload: id }, { call, put, select }) {
-		//   yield call(remove, id);
-		//   const page = yield select(state => state.users.page);
-		//   yield put({ type: 'fetch', payload: { page } });
-		// },
-		// *patch({ payload: { id, values } }, { call, put, select }) {
-		//   yield call(patch, id, values);
-		//   const page = yield select(state => state.users.page);
-		//   yield put({ type: 'fetch', payload: { page } });
-		// },
-		// *create({ payload: values }, { call, put, select }) {
-		//   yield call(create, values);
-		//   const page = yield select(state => state.users.page);
-		//   yield put({ type: 'fetch', payload: { page } });
-		// },
+		*login({ payload: values }, { call, put }) {
+			const result = yield call(login, values)
+			Cookies.set(auth, result.data.data.token, { expires: 1 })
+			if (result.data.status === 200 && result.data.data.token && result.data.data.token != '') {
+				
+			}
+		}
 	},
 	subscriptions: {
 		setup({ dispatch, history }) {
 			return history.listen(({ pathname, query }) => {
 				// if (pathname === '/sso' || pathname === '/sso/login') {
 				// 	dispatch({ type: 'fetch', payload: query })
-        // }
-        console.log('ssss')
+				// }
+				console.log('ssss')
 			})
 		}
 	}

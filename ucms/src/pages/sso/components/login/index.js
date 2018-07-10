@@ -8,13 +8,18 @@ import styles from './index.less'
 
 const FormItem = Form.Item
 
-const Login = ({ loading, dispatch, form: { getFieldDecorator, validateFieldsAndScroll } }) => {
-	function handleOk() {
-		validateFieldsAndScroll((errors, values) => {
-			if (errors) {
-				return
+function Login({ location, dispatch, loginModel, props, form }) {
+	const { getFieldDecorator, validateFieldsAndScroll } = form
+	function handleSubmit(e) {
+		e.preventDefault()
+		validateFieldsAndScroll((err, values) => {
+			if (!err) {
+				console.log('Received values of form: ', values)
 			}
-			dispatch({ type: 'login/login', payload: values })
+			dispatch({
+				type: 'loginModel/login',
+				payload: values
+			})
 		})
 	}
 
@@ -24,7 +29,11 @@ const Login = ({ loading, dispatch, form: { getFieldDecorator, validateFieldsAnd
 				<img alt="logo" src={config.logo} />
 				<span>{config.name}</span>
 			</div>
-			<form>
+			<Form
+				onSubmit={(e) => {
+					handleSubmit(e)
+				}}
+			>
 				<FormItem hasFeedback>
 					{getFieldDecorator('username', {
 						rules: [
@@ -32,7 +41,7 @@ const Login = ({ loading, dispatch, form: { getFieldDecorator, validateFieldsAnd
 								required: true
 							}
 						]
-					})(<Input onPressEnter={handleOk} placeholder="Username" />)}
+					})(<Input placeholder="Username" />)}
 				</FormItem>
 				<FormItem hasFeedback>
 					{getFieldDecorator('password', {
@@ -41,18 +50,18 @@ const Login = ({ loading, dispatch, form: { getFieldDecorator, validateFieldsAnd
 								required: true
 							}
 						]
-					})(<Input type="password" onPressEnter={handleOk} placeholder="Password" />)}
+					})(<Input type="password" placeholder="Password" />)}
 				</FormItem>
 				<Row>
-					<Button type="primary" onClick={handleOk} loading={loading.effects.login}>
-						Sign in
+					<Button type="primary" htmlType="submit">
+						登陆
 					</Button>
 					<p>
 						<Link to="/sso/register">注册</Link>
 						<a>忘记密码</a>
 					</p>
 				</Row>
-			</form>
+			</Form>
 		</div>
 	)
 }

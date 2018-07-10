@@ -29,6 +29,7 @@ const fetch = (options) => {
 	const cloneData = lodash.cloneDeep(body)
 	try {
 		if (!url.match(/[a-zA-z]+:\/\/[^/]*/)) {
+      
 			url = pathConfig(url)
 		}
 	} catch (e) {
@@ -59,7 +60,8 @@ const fetch = (options) => {
 	// 转化参数
 	const before = function(params) {
 		return qs.stringify(params)
-	}
+  }
+  console.log(url)
 	switch (method.toLowerCase()) {
 		case 'get':
 			return axios.get(url, {
