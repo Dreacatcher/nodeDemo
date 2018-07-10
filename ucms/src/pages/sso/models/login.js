@@ -1,5 +1,5 @@
 import { login } from '../services/login'
-import { auth } from '../../../config/config'
+import { auth, timestamps } from '../../../config/config'
 import { notification } from 'antd'
 import Cookies from 'js-cookie'
 import { routerRedux } from 'dva/router'
@@ -18,18 +18,27 @@ export default {
 		*login({ payload: values }, { call, put }) {
 			const result = yield call(login, values)
 			Cookies.set(auth, result.data.data.token, { expires: 1 })
-			if (result.data.status === 200 && result.data.data.token && result.data.data.token != '') {
-				
+			if (result.data.status === 200 && result.data.data.token) {
+				yield put(
+					routerRedux.push({
+						pathname: '/',
+						query: {
+							key: timestamps
+						}
+					})
+				)
+			} else {
+				notification.open({
+					message: '温馨提示',
+					description: result.data.data.message
+				})
 			}
 		}
 	},
 	subscriptions: {
 		setup({ dispatch, history }) {
 			return history.listen(({ pathname, query }) => {
-				// if (pathname === '/sso' || pathname === '/sso/login') {
-				// 	dispatch({ type: 'fetch', payload: query })
-				// }
-				console.log('ssss')
+				console.log('login -  model - ssss')
 			})
 		}
 	}
