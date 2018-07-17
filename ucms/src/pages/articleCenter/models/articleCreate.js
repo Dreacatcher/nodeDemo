@@ -6,11 +6,15 @@ export default {
     list: [],
     total: null,
     page: null,
+    content:''
   },
   reducers: {
-    save(state, { payload: { data: list, total, page } }) {
-      return { ...state, list, total, page };
-    },
+    updateStates(state, action) {
+			return {
+				...state,
+				...action.payload
+			}
+		}
   },
   effects: {
     *fetch({ payload: { page = 1 } }, { call, put }) {

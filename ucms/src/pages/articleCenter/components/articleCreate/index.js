@@ -1,24 +1,49 @@
 import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
+// import { connect } from 'react-umeditor'
+import ReactUeditor from 'react-ueditor'
+// import Editor  from 'react-umeditor'
 // import styles from './index.less'
 function ArticleCreate({ location, dispatch, articleCreateModel }) {
+	// const { content } = articleCreateModel
+	// const getIcons = () => {
+	// 	var icons = [
+	// 		'source | undo redo | bold italic underline strikethrough fontborder emphasis | ',
+	// 		'paragraph fontfamily fontsize | superscript subscript | ',
+	// 		'forecolor backcolor | removeformat | insertorderedlist insertunorderedlist | selectall | ',
+	// 		'cleardoc  | indent outdent | justifyleft justifycenter justifyright | touppercase tolowercase | ',
+	// 		'horizontal date time  | image emotion spechars | inserttable'
+	// 	]
+	// 	return icons
+	// }
+	// const getPlugins = () => {
+	// 	return {
+	// 		image: {
+	// 			uploader: {
+	// 				name: 'file',
+	// 				url: '/api/upload'
+	// 			}
+	// 		}
+	// 	}
+	// }
+	const handleChange = (content) => {
+		dispatch({
+			type: 'articleCreateModel/updateStates',
+			payload: {
+				content
+			}
+		})
+	}
 	return (
-		<div>
-			<div>
-        <h1>Yay! Welcome to dva! </h1>
-        <h2>WelcomeWelcomeWelcomeWelcomeWelcomeWelcome</h2>
-				<div />
-				<ul>
-					<li>
-						To get started, edit <code>src/index.js</code> and save to reload.
-					</li>
-					<li>
-						<a href="https://github.com/dvajs/dva">Getting Started</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+		<ReactUeditor
+			config={{ zIndex: 1001 }}
+			onChange={()=>{handleChange()}}
+			plugins={[ 'uploadImage', 'insertCode' ]}
+			// uploadImage={this.uploadImage}
+			ueditorPath="/static/uf8-php"
+			value="Hello World!"
+		/>
 	)
 }
 
