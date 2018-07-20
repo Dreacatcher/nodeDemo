@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
+import cn from 'classnames'
 import { Input } from 'antd'
 import { Editor } from 'react-draft-wysiwyg'
+import styles from './index.less'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 function ArticleCreate({ location, dispatch, articleCreateModel }) {
 	const { editorContent } = articleCreateModel
@@ -16,8 +18,8 @@ function ArticleCreate({ location, dispatch, articleCreateModel }) {
 		})
 	}
 	return (
-		<div>
-			<div className="creactArticleTt">
+		<div className="createArticleWp">
+			<div className={cn(styles.creacteArticleTt, styles.test)}>
 				<Input placeholder="输入文章标题" />
 			</div>
 			<Editor
