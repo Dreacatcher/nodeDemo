@@ -3,12 +3,11 @@ import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
 // import styles from './index.less'
 function ArticleList({ location, dispatch, articleListModel }) {
-	
 	return (
 		<div>
 			<div>
 				<h1>Yay! Welcome to dva! </h1>
-        <h2>articleLis tarticleListar ticleLista rticleList </h2>
+				<h2>articleLis tarticleListar ticleLista rticleList </h2>
 				<div />
 				<ul>
 					<li>

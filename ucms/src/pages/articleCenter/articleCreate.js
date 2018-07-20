@@ -1,9 +1,9 @@
-import ArticleCreate from './components/articleCreate/index';
+import ArticleCreate from './components/articleCreate/index'
 
 export default () => {
-  return (
-    <div>
-      <ArticleCreate />
-    </div>
-  )
+	return (
+		<div>
+			<ArticleCreate />
+		</div>
+	)
 }
