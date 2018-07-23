@@ -11,12 +11,28 @@ import draftToHtml from 'draftjs-to-html'
 const FormItem = Form.Item
 function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 	const { getFieldDecorator } = form
-	const { editorContent } = articleCreateModel
-	const handleChange = (editorContent) => {
+	const { editorContent, editorTitle, editorStates } = articleCreateModel
+	const handleChange = (editorStates) => {
+		dispatch({
+			type: 'articleCreateModel/updateStates',
+			payload: {
+				editorStates
+			}
+		})
+	}
+	const setEditorCont = (editorContent) => {
 		dispatch({
 			type: 'articleCreateModel/updateStates',
 			payload: {
 				editorContent
+			}
+		})
+	}
+	const setEditorTitle = (editorTitle) => {
+		dispatch({
+			type: 'articleCreateModel/updateStates',
+			payload: {
+				editorTitle
 			}
 		})
 	}
@@ -43,11 +59,17 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 					</Col>
 					<Col span={12}>
 						<FormItem>
-							{getFieldDecorator('userName', {
+							{getFieldDecorator('editorTitle', {
+								initialValue: editorTitle,
 								rules: [ { required: true, message: '请输入文章标题' } ]
 							})(
 								<div className={cn(styles.creacteArticleTt, styles.test)}>
-									<Input placeholder="输入文章标题" />
+									<Input
+										placeholder="输入文章标题"
+										onBlur={(e) => {
+											setEditorTitle(e.target.value)
+										}}
+									/>
 								</div>
 							)}
 						</FormItem>
@@ -59,12 +81,13 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 					</Col>
 					<Col span={20}>
 						<FormItem>
-							{getFieldDecorator('password', {
+							{getFieldDecorator('editorContent', {
+								initialValue: editorContent,
 								rules: [ { required: true, message: '请输入正文内容' } ]
 							})(
 								<div className="textCont">
 									<Editor
-										editorState={editorContent}
+										editorState={editorStates}
 										className="textCont"
 										toolbarClassName="toolbarClassName"
 										wrapperClassName="wrapperClassName"
@@ -72,8 +95,9 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 										onEditorStateChange={(e) => {
 											handleChange(e)
 										}}
-										onContentStateChange={(e) => {
-											console.log(draftToHtml(convertToRaw(editorContent.getCurrentContent())))
+										onContentStateChange={() => {
+											setEditorCont(draftToHtml(convertToRaw(editorStates.getCurrentContent())))
+											// console.log(draftToHtml(convertToRaw(editorStates.getCurrentContent())))
 										}}
 									/>
 								</div>

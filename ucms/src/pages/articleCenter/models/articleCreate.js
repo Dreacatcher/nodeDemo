@@ -3,10 +3,9 @@ import * as usersService from '../services/articleCreate'
 export default {
 	namespace: 'articleCreateModel',
 	state: {
-		list: [],
-		total: null,
-		page: null,
-		content: ''
+		editorTitle: '',
+		editorContent: '',
+		editorStates: ''
 	},
 	reducers: {
 		updateStates(state, action) {
