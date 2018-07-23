@@ -1,11 +1,21 @@
 @import '../../../../config/base.less';
 
-:global(.createArticleWp) {
-	color: green;
+:global {
+	.createArticleWp {
+		width: 94%;
+		color: green;
+		.textCont {
+			border: 1px solid @lightGreen !important;
+		}
+		.setPdt {
+			padding-top: 10px;
+		}
+		.editorClassName {
+			height: 260px;
+		}
+	}
 }
-.test {
-	background: #000;
-}
+
 .creacteArticleTt {
 	color: red;
 }

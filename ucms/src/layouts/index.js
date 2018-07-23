@@ -10,7 +10,7 @@ import { Layout, Breadcrumb } from 'antd'
 const { Content } = Layout
 
 function AppLayout({ children, location, dispatch, appModel }) {
-	if (location.pathname === '/sso/login'||location.pathname === '/sso/register') {
+	if (location.pathname === '/sso/login' || location.pathname === '/sso/register') {
 		return (
 			<Layout id="gContentWp" className={styles.nologin}>
 				<div className={styles.normal}>
@@ -24,18 +24,20 @@ function AppLayout({ children, location, dispatch, appModel }) {
 			<Layout id="gContentWp" className={styles.logged}>
 				<Header id="gHeader" location={location} />
 				<SideMenu id="gSideMenu" children={children} location={location} />
-				<Layout id="gContent" className={styles.contwp}>
-					<Breadcrumb className={styles.breadcrumb}>
-						<Breadcrumb.Item>Home</Breadcrumb.Item>
-						<Breadcrumb.Item>List</Breadcrumb.Item>
-						<Breadcrumb.Item>App</Breadcrumb.Item>
-					</Breadcrumb>
-					<Content className={styles.cont}>
-						<div className={styles.content}>
-							<div className={styles.main}>{children}</div>
-						</div>
-					</Content>
-				</Layout>
+				<div className="gContwp">
+					<Layout id="gContent" className={styles.contwp}>
+						<Breadcrumb className={styles.breadcrumb}>
+							<Breadcrumb.Item>Home</Breadcrumb.Item>
+							<Breadcrumb.Item>List</Breadcrumb.Item>
+							<Breadcrumb.Item>App</Breadcrumb.Item>
+						</Breadcrumb>
+						<Content className={styles.cont}>
+							<div className="content">
+								<div className={styles.main}>{children}</div>
+							</div>
+						</Content>
+					</Layout>
+				</div>
 			</Layout>
 		</div>
 	)
