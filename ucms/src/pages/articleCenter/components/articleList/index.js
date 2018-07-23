@@ -20,6 +20,13 @@ function ArticleList({ location, dispatch, articleListModel }) {
 		{
 			title: '创建时间',
 			dataIndex: 'times'
+		},
+		{
+			title: '操作',
+			dataIndex: 'options',
+			render: () => {
+				return <p>查看详情</p>
+			}
 		}
 	]
 	const data = [
