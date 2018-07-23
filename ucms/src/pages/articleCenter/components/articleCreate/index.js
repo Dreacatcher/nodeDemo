@@ -8,6 +8,7 @@ import styles from './index.less'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
+// import EchartC from '../echart/Echarts'
 const FormItem = Form.Item
 function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 	const { getFieldDecorator } = form
@@ -47,6 +48,7 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 
 	return (
 		<div className="createArticleWp">
+			{/* <EchartC /> */}
 			<Form
 				onSubmit={(e) => {
 					handleSubmit(e)

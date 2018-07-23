@@ -11,6 +11,8 @@
     "cookie": "^0.3.1",
     "draftjs-to-html": "^0.8.4",
     "dva": "^2.3.1",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.13",
     "react-draft-wysiwyg": "^1.12.13",
     "react-ueditor": "^1.1.2",
     "umi": "^1.0.0",
