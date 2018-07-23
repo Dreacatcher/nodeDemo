@@ -1,22 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
+import { Table } from 'antd'
 // import styles from './index.less'
 function ArticleList({ location, dispatch, articleListModel }) {
+	const columns = [
+		{
+			title: '文章编码',
+			dataIndex: 'number'
+		},
+		{
+			title: '文章标题',
+			dataIndex: 'title'
+		},
+		{
+			title: '文章作者',
+			dataIndex: 'athor'
+		},
+		{
+			title: '创建时间',
+			dataIndex: 'times'
+		}
+	]
+	const data = [
+		{
+			key: 1,
+			number: 232248323982948,
+			title: 'Using editor component',
+			athor: 'JohnBrownee',
+			times: '2018-7-20'
+		},
+		{
+			key: 2,
+			number: 232248323982949,
+			title: 'Using editor component',
+			athor: 'JohnBrown',
+			times: '2018-7-21'
+		},
+		{
+			key: 3,
+			number: 232248323982950,
+			title: 'Using editor component',
+			athor: 'JohnBrownww',
+			times: '2018-7-22'
+		}
+	]
 	return (
 		<div>
 			<div>
-				<h1>Yay! Welcome to dva! </h1>
-				<h2>articleLis tarticleListar ticleLista rticleList </h2>
-				<div />
-				<ul>
-					<li>
-						To get started, edit <code>src/index.js</code> and save to reload.
-					</li>
-					<li>
-						<a href="https://github.com/dvajs/dva">Getting Started</a>
-					</li>
-				</ul>
+				<Table columns={columns} dataSource={data} size="middle" />
 			</div>
 		</div>
 	)
