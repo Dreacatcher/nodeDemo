@@ -1,115 +1,68 @@
+import React from 'react'
+import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
-import { Table, Pagination, Popconfirm, Button } from 'antd'
-import { routerRedux } from 'dva/router'
-import styles from './index.less'
-
-import UserModal from '../ui/userModal'
-
-function Users({ dispatch, list: dataSource, loading, total, page: current }) {
-	function deleteHandler(id) {
-		dispatch({
-			type: 'users/remove',
-			payload: id
-		})
-	}
-
-	function pageChangeHandler(page) {
-		dispatch(
-			routerRedux.push({
-				pathname: '/users',
-				query: { page }
-			})
-		)
-	}
-
-	function editHandler(id, values) {
-		dispatch({
-			type: 'users/patch',
-			payload: { id, values }
-		})
-	}
-
-	function createHandler(values) {
-		dispatch({
-			type: 'users/create',
-			payload: values
-		})
-	}
-
+import { Table } from 'antd'
+// import styles from './index.less'
+function ArticleList({ location, dispatch, articleListModel }) {
 	const columns = [
 		{
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
-			render: (text) => <a href="">{text}</a>
+			title: '文章编码',
+			dataIndex: 'number'
 		},
 		{
-			title: 'Email',
-			dataIndex: 'email',
-			key: 'email'
+			title: '文章标题',
+			dataIndex: 'title'
 		},
 		{
-			title: 'Website',
-			dataIndex: 'website',
-			key: 'website'
+			title: '文章作者',
+			dataIndex: 'athor'
 		},
 		{
-			title: 'Operation',
-			key: 'operation',
-			render: (text, record) => (
-				<span className={styles.operation}>
-					<UserModal record={record} onOk={editHandler.bind(null, record.id)}>
-						<a>Edit</a>
-					</UserModal>
-					<Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
-						<a href="">Delete</a>
-					</Popconfirm>
-				</span>
-			)
+			title: '创建时间',
+			dataIndex: 'times'
+		},
+		{
+			title: '操作',
+			dataIndex: 'options',
+			render: () => {
+				return <a>查看详情</a>
+			}
 		}
 	]
-
+	const data = [
+		{
+			key: 1,
+			number: 232248323982948,
+			title: 'Using editor component',
+			athor: 'JohnBrownee',
+			times: '2018-7-20'
+		},
+		{
+			key: 2,
+			number: 232248323982949,
+			title: 'Using editor component',
+			athor: 'JohnBrown',
+			times: '2018-7-21'
+		},
+		{
+			key: 3,
+			number: 232248323982950,
+			title: 'Using editor component',
+			athor: 'JohnBrownww',
+			times: '2018-7-22'
+		}
+	]
 	return (
-		<div className={styles.normal}>
-			<h2>EditEdit Edit Edit Edit</h2>
+		<div>
 			<div>
-				<div className={styles.create}>
-					<UserModal record={{}} onOk={createHandler}>
-						<Button type="primary">Create User</Button>
-					</UserModal>
-				</div>
-				<Table
-					loading={loading}
-					columns={columns}
-					dataSource={dataSource}
-					rowKey={(record) => record.id}
-					pagination={false}
-				/>
-				<Pagination
-					className="ant-table-pagination"
-					total={total}
-					current={current}
-					pageSize={3}
-					onChange={pageChangeHandler}
-				/>
+				<Table columns={columns} dataSource={data} size="middle" />
 			</div>
 		</div>
 	)
 }
 
-function mapStateToProps(state) {
-	const { list, total, page } = state.users
-	return {
-		list,
-		total,
-		page,
-		loading: state.loading.models.users
-	}
+ArticleList.propTypes = {
+	articleListModel: PropTypes.object
 }
-// ProductsCreate.propTypes = {
-// 	productsCreateModel: PropTypes.object
-// }
-// // 指定订阅数据，这里关联了,建立数据关联关系
-// export default connect(({ productsCreateModel }) => ({ productsCreateModel }))(ProductsCreate)
-
-export default connect(mapStateToProps)(Users)
+// 指定订阅数据，这里关联了,建立数据关联关系
+export default connect(({ articleListModel }) => ({ articleListModel }))(ArticleList)
