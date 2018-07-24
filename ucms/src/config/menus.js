@@ -79,13 +79,13 @@ let menus = [
 				key: '51',
 				name: '角色管理',
 				icon: 'switcher',
-				router: '/roleList'
+				router: '/sysManage/roleList'
 			},
 			{
 				key: '52',
 				name: '系统用户管理',
 				icon: 'switcher',
-				router: '/sysUserList'
+				router: '/sysManage/sysUserList'
 			}
 		]
 	}
