@@ -68,6 +68,26 @@ let menus = [
 				router: '/echart'
 			}
 		]
+	},
+
+	{
+		key: '5',
+		name: '系统设置',
+		icon: 'setting',
+		children: [
+			{
+				key: '51',
+				name: '角色管理',
+				icon: 'switcher',
+				router: '/roleList'
+			},
+			{
+				key: '52',
+				name: '系统用户管理',
+				icon: 'switcher',
+				router: '/sysUserList'
+			}
+		]
 	}
 ]
 export default menus
