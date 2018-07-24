@@ -25,7 +25,7 @@ function ArticleList({ location, dispatch, articleListModel }) {
 			title: '操作',
 			dataIndex: 'options',
 			render: () => {
-				return <p>查看详情</p>
+				return <a>查看详情</a>
 			}
 		}
 	]
