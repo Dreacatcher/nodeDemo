@@ -83,8 +83,8 @@ exports.login = async (ctx) => {
 			let updateResult = await ctx.service.users.updateUser(result.data)
 			if (updateResult.status === 200) {
 				ctx.body = {
-          data: 'null',
-          token,
+					data: 'null',
+					token,
 					message: '登陆成功'
 				}
 			} else {
