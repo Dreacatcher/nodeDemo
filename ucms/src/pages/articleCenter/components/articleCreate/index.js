@@ -10,40 +10,35 @@ import { convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 // import EchartC from '../echart/Echarts'
 const FormItem = Form.Item
-function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
+function ArticleCreate({ location, dispatch, createArticleModel, form }) {
 	const { getFieldDecorator } = form
-	const { editorContent, editorTitle, editorStates } = articleCreateModel
+	const { editorStates, articleParam } = createArticleModel
 	const handleChange = (editorStates) => {
 		dispatch({
-			type: 'articleCreateModel/updateStates',
+			type: 'createArticleModel/updateStates',
 			payload: {
 				editorStates
 			}
 		})
 	}
 	const setEditorCont = (editorContent) => {
-		dispatch({
-			type: 'articleCreateModel/updateStates',
-			payload: {
-				editorContent
-			}
-		})
+		articleParam.cont = editorContent
 	}
 	const setEditorTitle = (editorTitle) => {
-		dispatch({
-			type: 'articleCreateModel/updateStates',
-			payload: {
-				editorTitle
-			}
-		})
+		console.log(articleParam)
+		articleParam.title = editorTitle
 	}
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		form.validateFields((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values)
+				articleParam.title = values.editorTitle
+				articleParam.cont = values.cont
 			}
 		})
+
+		dispatch({ type: 'createArticleModel/createArticle', payload: articleParam })
 	}
 
 	return (
@@ -62,7 +57,7 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 					<Col span={12}>
 						<FormItem>
 							{getFieldDecorator('editorTitle', {
-								initialValue: editorTitle,
+								initialValue: articleParam.title,
 								rules: [ { required: true, message: '请输入文章标题' } ]
 							})(
 								<div className={cn(styles.creacteArticleTt, styles.test)}>
@@ -84,7 +79,7 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 					<Col span={20}>
 						<FormItem>
 							{getFieldDecorator('editorContent', {
-								initialValue: editorContent,
+								initialValue: articleParam.cont,
 								rules: [ { required: true, message: '请输入正文内容' } ]
 							})(
 								<div className="textCont">
@@ -123,7 +118,7 @@ function ArticleCreate({ location, dispatch, articleCreateModel, form }) {
 }
 
 ArticleCreate.propTypes = {
-	articleCreateModel: PropTypes.object
+	createArticleModel: PropTypes.object
 }
 // 指定订阅数据，这里关联了,建立数据关联关系
-export default connect(({ articleCreateModel }) => ({ articleCreateModel }))(Form.create()(ArticleCreate))
+export default connect(({ createArticleModel }) => ({ createArticleModel }))(Form.create()(ArticleCreate))

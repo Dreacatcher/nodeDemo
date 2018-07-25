@@ -1,8 +1,9 @@
-// import request from '../../../utils/request'
+import request from '../../../utils/request'
 
-// export function fetch(params) {
-// 	return request('/api/v1/users', {
-// 		method: 'GET',
-// 		data: params
-// 	})
-// }
+export function createArticle(params) {
+	return request({
+		url: '/article',
+		method: 'POST',
+		body: params
+	})
+}
