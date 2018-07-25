@@ -1,50 +1,48 @@
-import * as usersService from '../services/articleCreate'
-
+import { getArticleList } from '../services/articleList'
+// import { auth } from '../../../config/config'
+// import { notification } from 'antd'
+// import Cookies from 'js-cookie'
+// import { routerRedux } from 'dva/router'
 export default {
 	namespace: 'articleListModel',
 	state: {
-		list: [],
-		total: null,
-		page: null
+		articleListData: []
 	},
 	reducers: {
-		save(state, { payload: { data: list, total, page } }) {
-			return { ...state, list, total, page }
+		updateStates(state, action) {
+			return {
+				...state,
+				...action.payload
+			}
 		}
 	},
 	effects: {
-		*fetch({ payload: { page = 1 } }, { call, put }) {
-			const { data, headers } = yield call(usersService.fetch, { page })
-			yield put({
-				type: 'save',
-				payload: {
-					data,
-					total: parseInt(headers['x-total-count'], 10),
-					page: parseInt(page, 10)
-				}
-			})
-		},
-		*remove({ payload: id }, { call, put, select }) {
-			yield call(usersService.remove, id)
-			const page = yield select((state) => state.users.page)
-			yield put({ type: 'fetch', payload: { page } })
-		},
-		*patch({ payload: { id, values } }, { call, put, select }) {
-			yield call(usersService.patch, id, values)
-			const page = yield select((state) => state.users.page)
-			yield put({ type: 'fetch', payload: { page } })
-		},
-		*create({ payload: values }, { call, put, select }) {
-			yield call(usersService.create, values)
-			const page = yield select((state) => state.users.page)
-			yield put({ type: 'fetch', payload: { page } })
+		*articleList({ payload: values }, { call, put }) {
+			console.log(values)
+			const result = yield call(getArticleList, values)
+			console.log(result)
+
+			// if (result.data.status === 200 && result.data.data.token) {
+			// 	console.log(result)
+			// 	yield put({
+			// 		type: 'updateStates',
+			// 		payload: {
+			// 			articleListData: result
+			// 		}
+			// 	})
+			// } else {
+			// 	notification.open({
+			// 		message: '温馨提示',
+			// 		description: result.data.data.message
+			// 	})
+			// }
 		}
 	},
 	subscriptions: {
 		setup({ dispatch, history }) {
 			return history.listen(({ pathname, query }) => {
-				if (pathname === '/users') {
-					dispatch({ type: 'fetch', payload: query })
+				if (pathname === '/articleCenter/articleList') {
+					dispatch({ type: 'articleList', payload: {} })
 				}
 			})
 		}

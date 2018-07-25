@@ -1,20 +1,28 @@
 'use strict'
 const Service = require('egg').Service
+/** */
 const ran = () => {
 	const num = new Date().getTime()
 	return num.toString().substring(0, 16) + parseInt(Math.round(Math.random() * 30 + 100))
 }
-class UserService extends Service {
+class ArticleService extends Service {
 	async find(name) {
-		console.log('2*************************')
-		console.log(name)
-		// const user = await this.app.mysql.query('select * from user')
-		const user = await this.app.mysql.get('user', {
-			username: name
-		})
+		let results
+		if (name) {
+			results = await this.app.mysql.select('article', {
+				// 搜索 post 表
+				where: { status: 'draft', author: [ 'author1', 'author2' ] }, // WHERE 条件
+				columns: [ name ], // 要查询的表字段
+				orders: [ [ 'created_at', 'desc' ], [ 'id', 'desc' ] ], // 排序方式
+				limit: 10, // 返回数据量
+				offset: 0 // 数据偏移量
+			})
+		} else {
+			results = await this.app.mysql.select('article')
+		}
 		return {
 			message: '',
-			data: user
+			data: results
 		}
 	}
 	async addUser(param) {
@@ -122,4 +130,4 @@ class UserService extends Service {
 		return result
 	}
 }
-module.exports = UserService
+module.exports = ArticleService

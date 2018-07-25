@@ -4,6 +4,8 @@ import { connect } from 'dva'
 import { Table } from 'antd'
 // import styles from './index.less'
 function ArticleList({ location, dispatch, articleListModel }) {
+	const { articleList } = articleListModel
+	console.log(articleList)
 	const columns = [
 		{
 			title: '文章编码',
