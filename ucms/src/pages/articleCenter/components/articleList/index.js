@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
 import { Table } from 'antd'
+import MyTable from '../myTable/index'
 // import styles from './index.less'
 function ArticleList({ location, dispatch, articleListModel }) {
 	const { articleList } = articleListModel
@@ -57,6 +58,7 @@ function ArticleList({ location, dispatch, articleListModel }) {
 	return (
 		<div>
 			<div>
+				<MyTable />
 				<Table columns={columns} dataSource={data} size="middle" />
 			</div>
 		</div>

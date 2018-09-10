@@ -25,7 +25,6 @@ function ArticleCreate({ location, dispatch, createArticleModel, form }) {
 		articleParam.cont = editorContent
 	}
 	const setEditorTitle = (editorTitle) => {
-		console.log(articleParam)
 		articleParam.title = editorTitle
 	}
 	const handleSubmit = (e) => {
@@ -34,10 +33,10 @@ function ArticleCreate({ location, dispatch, createArticleModel, form }) {
 			if (!err) {
 				console.log('Received values of form: ', values)
 				articleParam.title = values.editorTitle
-				articleParam.cont = values.cont
+				articleParam.author = values.editorAuthor
+				articleParam.cont = values.editorContent
 			}
 		})
-
 		dispatch({ type: 'createArticleModel/createArticle', payload: articleParam })
 	}
 
@@ -63,6 +62,28 @@ function ArticleCreate({ location, dispatch, createArticleModel, form }) {
 								<div className={cn(styles.creacteArticleTt, styles.test)}>
 									<Input
 										placeholder="输入文章标题"
+										onBlur={(e) => {
+											setEditorTitle(e.target.value)
+										}}
+									/>
+								</div>
+							)}
+						</FormItem>
+					</Col>
+				</Row>
+				<Row>
+					<Col className="setPdt" span={4}>
+						发布人：
+					</Col>
+					<Col span={5}>
+						<FormItem>
+							{getFieldDecorator('editorAuthor', {
+								initialValue: articleParam.title,
+								rules: [ { required: true, message: '请输入发布人' } ]
+							})(
+								<div className={cn(styles.creacteArticleTt, styles.test)}>
+									<Input
+										placeholder="请输入发布人"
 										onBlur={(e) => {
 											setEditorTitle(e.target.value)
 										}}

@@ -24,8 +24,6 @@ export default {
 	},
 	effects: {
 		*createArticle({ payload: articleParam }, { call, put }) {
-			console.log(articleParam)
-			debugger
 			const result = yield call(createArticle, articleParam)
 			console.log(result)
 
