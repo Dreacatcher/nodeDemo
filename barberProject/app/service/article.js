@@ -6,16 +6,12 @@ const ran = () => {
 	return num.toString().substring(0, 16) + parseInt(Math.round(Math.random() * 30 + 100))
 }
 class ArticleService extends Service {
-	async find(name) {
+	async find(title) {
 		let results
-		if (name) {
-			results = await this.app.mysql.select('article', {
-				// 搜索 post 表
-				where: { status: 'draft', author: [ 'author1', 'author2' ] }, // WHERE 条件
-				columns: [ name ], // 要查询的表字段
-				orders: [ [ 'created_at', 'desc' ], [ 'id', 'desc' ] ], // 排序方式
-				limit: 10, // 返回数据量
-				offset: 0 // 数据偏移量
+		if (title) {
+			// 假如 我们拿到用户 title 从数据库获取用户详细信息
+			results = await this.app.mysql.get('article', {
+				title
 			})
 		} else {
 			results = await this.app.mysql.select('article')
@@ -25,38 +21,22 @@ class ArticleService extends Service {
 			data: results
 		}
 	}
-	async addUser(param) {
+	async insert(param) {
 		let result = {}
-		console.log(ran())
-		param.userid = ran()
-		param.createtime = this.app.mysql.literals.now
-		console.log('service-add*************************')
-		console.log(param)
-		const hasName = await this.app.mysql.get('user', {
-			username: param.username,
-			mobile: param.mobile
-		})
-		console.log(hasName)
-		console.log('service-add-find*************************')
 		// 假如 我们拿到用户 id 从数据库获取用户详细信息
-		if (hasName && hasName.userid) {
+		const insertResult = await this.app.mysql.insert('article', param)
+		const insertSuccess = insertResult.affectedRows === 1
+		if (!insertSuccess) {
 			result = {
-				message: '用户已经存在',
-				data: 'null'
+        message: '文章创建失败',
+        code: 0,
+				data: insertSuccess
 			}
 		} else {
-			const insertResult = await this.app.mysql.insert('user', param)
-			const insertSuccess = insertResult.affectedRows === 1
-			if (!insertSuccess) {
-				result = {
-					message: '注册失败',
-					data: insertSuccess
-				}
-			} else {
-				result = {
-					message: '注册成功',
-					data: 'null'
-				}
+			result = {
+        message: '文章创建成功',
+        code: 1,
+				data: 'success'
 			}
 		}
 		return result

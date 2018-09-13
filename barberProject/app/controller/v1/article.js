@@ -9,13 +9,13 @@ const AJS = require('another-json-schema')
 const uuidv1 = require('uuid/v1')
 exports.index = async (ctx) => {
 	const name = ctx.query.name
-	// const userSchema = AJS('userSchema', {
+	// const articleSchema = AJS('articleSchema', {
 	// 	name: {
 	// 		type: 'string',
 	// 		required: true
 	// 	}
 	// })
-	// const vResult = userSchema.validate({
+	// const vResult = articleSchema.validate({
 	// 	name
 	// })
 	console.log('user-index*************************')
@@ -24,29 +24,43 @@ exports.index = async (ctx) => {
 
 exports.new = async () => {}
 exports.create = async (ctx) => {
-	const userSchema = AJS('userSchema', {
-		username: {
+	const articleSchema = AJS('articleSchema', {
+		title: {
 			type: 'string',
 			required: true
 		},
-		password: {
+		cont: {
 			type: 'string',
 			required: true
 		},
-		mobile: {
+		author: {
 			type: 'string',
-			pattern: /^[0-9]{11}$/,
 			required: true
 		}
 	})
-	const vResult = userSchema.validate(ctx.request.body)
-	console.log(ctx)
-	ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
+	const vResult = articleSchema.validate(ctx.request.body)
+
 	if (vResult.valid) {
 		ctx.request.body.createtime = format('yy/MM/dd hh/mm/ss', new Date())
 		ctx.request.body.updatetime = format('yy/MM/dd hh/mm/ss', new Date())
-		ctx.request.body.uid = uuidv1()
-		ctx.body = await ctx.service.users.addUser(ctx.request.body)
+
+    ctx.request.body.aid = new Date().getTime()
+    console.log('***************')
+    console.log(ctx.request.body)
+		// 根据name查询是否存在
+		let _result = {}
+		_result = await ctx.service.article.find(ctx.request.body.title)
+		if (_result.data == null) {
+			ctx.body = await ctx.service.article.insert(ctx.request.body)
+		} else {
+			ctx.body = {
+        data: 'error',
+        code: 0,
+				message: '该文章已经存在'
+			}
+		}
+		console.log('_result------_result------_result------_result')
+		console.log(_result.data == null)
 	} else {
 		ctx.body = {
 			data: null,
@@ -59,7 +73,7 @@ exports.create = async (ctx) => {
 
 exports.show = async () => {}
 exports.login = async (ctx) => {
-	const userSchema = AJS('userSchema', {
+	const articleSchema = AJS('articleSchema', {
 		username: {
 			type: 'string',
 			required: true
@@ -69,7 +83,7 @@ exports.login = async (ctx) => {
 			required: true
 		}
 	})
-	const vResult = userSchema.validate(ctx.query)
+	const vResult = articleSchema.validate(ctx.query)
 	ctx.query.password = Base64.encode(md5(ctx.query.password))
 	if (vResult.valid) {
 		let result = await ctx.service.users.find(ctx.query.username)
@@ -106,7 +120,7 @@ exports.login = async (ctx) => {
 	}
 }
 exports.update = async (ctx) => {
-	const userSchema = AJS('userSchema', {
+	const articleSchema = AJS('articleSchema', {
 		username: {
 			type: 'string',
 			required: true
@@ -116,7 +130,7 @@ exports.update = async (ctx) => {
 			required: true
 		}
 	})
-	const vResult = userSchema.validate(ctx.request.body)
+	const vResult = articleSchema.validate(ctx.request.body)
 
 	ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
 	// ctx.request.body.id = ctx.param.id
@@ -127,7 +141,7 @@ exports.update = async (ctx) => {
 	}
 }
 exports.destroy = async (ctx) => {
-	const userSchema = AJS('userSchema', {
+	const articleSchema = AJS('articleSchema', {
 		username: {
 			type: 'string',
 			required: true
@@ -137,7 +151,7 @@ exports.destroy = async (ctx) => {
 			required: true
 		}
 	})
-	const vResult = userSchema.validate(ctx.request.body)
+	const vResult = articleSchema.validate(ctx.request.body)
 	ctx.request.body.password = Base64.encode(md5(ctx.request.body.password))
 	if (vResult.valid) {
 		ctx.body = await ctx.service.users.deleteUser(ctx.request.body)

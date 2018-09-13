@@ -103,7 +103,9 @@ const loginOut = (code) => {
 }
 
 export default function request(options) {
-	return fetch(options)
+  console.log("options__options")
+  console.log(options)
+  return fetch(options)
 		.then((response) => {
 			loginOut(response.status)
 			return response
