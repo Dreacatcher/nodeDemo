@@ -37,29 +37,7 @@ function ArticleList({ location, dispatch, articleListModel }) {
 			}
 		}
 	]
-	const data = [
-		{
-			key: 1,
-			number: 232248323982948,
-			title: 'Using editor component',
-			athor: 'JohnBrownee',
-			times: '2018-7-20'
-		},
-		{
-			key: 2,
-			number: 232248323982949,
-			title: 'Using editor component',
-			athor: 'JohnBrown',
-			times: '2018-7-21'
-		},
-		{
-			key: 3,
-			number: 232248323982950,
-			title: 'Using editor component',
-			athor: 'JohnBrownww',
-			times: '2018-7-22'
-		}
-	]
+
 	return (
 		<div>
 			<div>

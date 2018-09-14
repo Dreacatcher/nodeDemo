@@ -16,10 +16,7 @@ class ArticleService extends Service {
 		} else {
 			results = await this.app.mysql.select('article')
 		}
-		return {
-			message: '',
-			data: results
-		}
+    return results
 	}
 	async insert(param) {
 		let result = {}

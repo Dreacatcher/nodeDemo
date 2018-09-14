@@ -7,6 +7,7 @@ const Base64 = require('js-base64').Base64
 var format = require('date-format')
 const AJS = require('another-json-schema')
 const uuidv1 = require('uuid/v1')
+const { resultValidate } = require('../../utils/validate')
 exports.index = async (ctx) => {
 	const name = ctx.query.name
 	// const articleSchema = AJS('articleSchema', {
@@ -19,7 +20,8 @@ exports.index = async (ctx) => {
 	// 	name
 	// })
 	console.log('user-index*************************')
-	ctx.body = await ctx.service.article.find()
+ let _result = await ctx.service.article.find()
+  ctx.body = resultValidate(_result)
 }
 
 exports.new = async () => {}
@@ -44,9 +46,9 @@ exports.create = async (ctx) => {
 		ctx.request.body.createtime = format('yy/MM/dd hh/mm/ss', new Date())
 		ctx.request.body.updatetime = format('yy/MM/dd hh/mm/ss', new Date())
 
-    ctx.request.body.aid = new Date().getTime()
-    console.log('***************')
-    console.log(ctx.request.body)
+		ctx.request.body.aid = new Date().getTime()
+		console.log('***************')
+		console.log(ctx.request.body)
 		// 根据name查询是否存在
 		let _result = {}
 		_result = await ctx.service.article.find(ctx.request.body.title)
@@ -54,8 +56,8 @@ exports.create = async (ctx) => {
 			ctx.body = await ctx.service.article.insert(ctx.request.body)
 		} else {
 			ctx.body = {
-        data: 'error',
-        code: 0,
+				data: 'error',
+				code: 0,
 				message: '该文章已经存在'
 			}
 		}

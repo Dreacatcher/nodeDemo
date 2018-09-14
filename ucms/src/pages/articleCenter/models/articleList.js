@@ -20,17 +20,18 @@ export default {
 		*articleList({ payload: values }, { call, put }) {
 			const result = yield call(getArticleList, values)
 			if (result.status === 200) {
+				console.log('返回结果')
 				console.log(result)
 				yield put({
 					type: 'updateStates',
 					payload: {
-						articleListData: result.data.data.data
+						articleListData: result.data
 					}
 				})
 			} else {
 				notification.open({
 					message: '温馨提示',
-					description: result.data.data.message
+					description: result.message
 				})
 			}
 		}

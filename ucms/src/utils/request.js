@@ -102,13 +102,15 @@ const loginOut = (code) => {
 	}
 }
 
+const resultProcess = (result) => {
+  return result.data
+}
+
 export default function request(options) {
-  console.log("options__options")
-  console.log(options)
   return fetch(options)
 		.then((response) => {
-			loginOut(response.status)
-			return response
+      loginOut(response.status)
+			return resultProcess(response)
 		})
 		.catch((error) => {
 			const { response } = error
