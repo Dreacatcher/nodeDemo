@@ -1,6 +1,6 @@
 import { getArticleList } from '../services/articleList'
 // import { auth } from '../../../config/config'
-// import { notification } from 'antd'
+import { notification } from 'antd'
 // import Cookies from 'js-cookie'
 // import { routerRedux } from 'dva/router'
 export default {
@@ -18,24 +18,21 @@ export default {
 	},
 	effects: {
 		*articleList({ payload: values }, { call, put }) {
-			console.log(values)
 			const result = yield call(getArticleList, values)
-			console.log(result)
-
-			// if (result.data.status === 200 && result.data.data.token) {
-			// 	console.log(result)
-			// 	yield put({
-			// 		type: 'updateStates',
-			// 		payload: {
-			// 			articleListData: result
-			// 		}
-			// 	})
-			// } else {
-			// 	notification.open({
-			// 		message: '温馨提示',
-			// 		description: result.data.data.message
-			// 	})
-			// }
+			if (result.status === 200) {
+				console.log(result)
+				yield put({
+					type: 'updateStates',
+					payload: {
+						articleListData: result.data.data.data
+					}
+				})
+			} else {
+				notification.open({
+					message: '温馨提示',
+					description: result.data.data.message
+				})
+			}
 		}
 	},
 	subscriptions: {

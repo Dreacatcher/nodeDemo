@@ -2,31 +2,36 @@ import React from 'react'
 import PropTypes from 'prop-types' // ES6
 import { connect } from 'dva'
 import { Table } from 'antd'
-import MyTable from '../myTable/index'
+// import MyTable from '../myTable/index'
 // import styles from './index.less'
 function ArticleList({ location, dispatch, articleListModel }) {
-	const { articleList } = articleListModel
-	console.log(articleList)
+	const { articleListData } = articleListModel
+	console.log(articleListData)
 	const columns = [
 		{
 			title: '文章编码',
-			dataIndex: 'number'
+      dataIndex: 'id',
+      key:'id'
 		},
 		{
 			title: '文章标题',
-			dataIndex: 'title'
+      dataIndex: 'title',
+      key:'title'
 		},
 		{
 			title: '文章作者',
-			dataIndex: 'athor'
+      dataIndex: 'author',
+      key:'author'
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'times'
+      dataIndex: 'createtime',
+      key:'createtime'
 		},
 		{
 			title: '操作',
-			dataIndex: 'options',
+      dataIndex: 'options',
+      key:'options',
 			render: () => {
 				return <a>查看详情</a>
 			}
@@ -58,8 +63,8 @@ function ArticleList({ location, dispatch, articleListModel }) {
 	return (
 		<div>
 			<div>
-				<MyTable />
-				<Table columns={columns} dataSource={data} size="middle" />
+				{/* <MyTable /> */}
+				<Table columns={columns} dataSource={articleListData} size="middle" />
 			</div>
 		</div>
 	)
